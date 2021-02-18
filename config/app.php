@@ -167,8 +167,6 @@ return [
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
-
         
         /*
          * Application Service Providers...
@@ -232,7 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class, 
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+
 
     ],
 
