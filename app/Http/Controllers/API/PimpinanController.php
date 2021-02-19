@@ -112,7 +112,7 @@ class PimpinanController extends Controller
     // mengambil data bulan
     public function dataBulan()
     {
-        $bulan = LaporanStok::all();
+        $bulan = LaporanStok::all()->unique();
         if ($bulan == "[]") {
             return Response()->json([
                 "status" => "failed",
@@ -122,12 +122,28 @@ class PimpinanController extends Controller
         return response()->json(new BulanCollection($bulan), Response::HTTP_OK);
     }
 
+    // mengambil data tanggal
+    public function dataHari($bulan)
+    {
+        $hari = LaporanStok::where('bulan', $bulan)->get()->unique();
+        if ($hari == "[]") {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+        return response()->json(new HariCollection($hari), Response::HTTP_OK);
+    }
+
     // laporan pembelian, penjualan dan laba rugi
     public function laporanPimpinan($bulan)
     {
         $pembelian = Pembelian::where('bulan', $bulan)->get()->count();
         $penjualan = Penjualan::where('bulan', $bulan)->get()->count();
         $namaBulan = LabaRugi::where('bulan', $bulan)->first();
+        if (!$namaBulan) {
+            $namaBulan = "Belum ada data masuk";
+        }
 
         $pemasukan = LabaRugi::where('bulan', $bulan)->get()->sum('total_pemasukan');
         $pengeluaran = LabaRugi::where('bulan', $bulan)->get()->sum('total_pengeluaran');

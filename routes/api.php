@@ -44,6 +44,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 Route::group(['middleware' => ['jwt.verify']], function () {
     // laporan
     Route::get('laporan', 'API\PimpinanController@dataBulan');
+    Route::get('laporan-hari/{bulan}', 'API\PimpinanController@dataHari');
     Route::get('laporan/{bulan}', 'API\PimpinanController@laporanPimpinan');
     // laporan stok barang
     Route::get('laporan-stok/{bulan}', 'API\PimpinanController@stokBarangPerBulan');
