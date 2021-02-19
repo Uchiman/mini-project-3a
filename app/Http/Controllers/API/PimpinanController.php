@@ -112,7 +112,7 @@ class PimpinanController extends Controller
     // mengambil data bulan
     public function dataBulan()
     {
-        $bulan = LaporanStok::all()->unique();
+        $bulan = LaporanStok::all()->unique('bulan');
         if ($bulan == "[]") {
             return Response()->json([
                 "status" => "failed",
@@ -125,7 +125,7 @@ class PimpinanController extends Controller
     // mengambil data tanggal
     public function dataHari($bulan)
     {
-        $hari = LaporanStok::where('bulan', $bulan)->get()->unique();
+        $hari = LaporanStok::where('bulan', $bulan)->get()->unique('hari');
         if ($hari == "[]") {
             return Response()->json([
                 "status" => "failed",
