@@ -158,7 +158,7 @@ class PimpinanController extends Controller
                 'pengeluaran' => number_format($pengeluaran, 0, ',', '.') ?: 0,
                 'laba_rugi' => number_format($labaRugi, 0, ',', '.') ?: 0,
                 "bulan" => $bulan,
-                "nama" => $namaBulan->created_at->format('F'),
+                "nama" => $namaBulan->created_at->format('F-Y'),
             ],
         ], Response::HTTP_OK);
     }
@@ -167,6 +167,9 @@ class PimpinanController extends Controller
     public function laporanLabaRugi($hari)
     {
         $labaRugi = LabaRugi::where('hari', $hari)->first();
+        $jumlah_barang = DetailPenjualan::whereDate('created_at', $hari)->sum('jumlah_barang');
+        $pendapatan = $labaRugi->total_pemasukan;
+        dd($pendapatan); 
         if ($labaRugi == "[]") {
             return Response()->json([
                 "status" => "failed",
