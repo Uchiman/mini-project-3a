@@ -184,7 +184,6 @@ class PimpinanController extends Controller
         }
 
         $jumlah_barang = DetailPenjualan::whereDate('created_at', $hari)->sum('jumlah_barang');
-        // dd($jumlah_barang);
         $pendapatan = $labaRugi->total_pemasukan;
         $detail_barang = DetailPenjualan::whereDate('created_at', $hari)->get();
         foreach ($detail_barang as $barang) {
@@ -202,8 +201,8 @@ class PimpinanController extends Controller
             'message'   =>  'data berhasil ditampilkan',
             "data"      =>  [
                 'jumlah_penjualan'  => $jumlah_barang,
-                'pendapatan'        => $pendapatan,
-                'keuntungan'        => $keuntungan,
+                'pendapatan'        => number_format($pendapatan, 0, ',', '.'),
+                'keuntungan'        => number_format($keuntungan, 0, ',', '.'),
             ],
         ]);
     }
