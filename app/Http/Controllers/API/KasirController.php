@@ -62,6 +62,7 @@ class KasirController extends Controller
             $detailPenjualan->jumlah_barang = $request->jumlah_barang;
             $detailPenjualan->harga_jual = $barang->harga_jual * $request->jumlah_barang;
             $detailPenjualan->diskon = $barang->diskon;
+            $detailPenjualan->created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
             $detailPenjualan->save();
 
             return response()->json([

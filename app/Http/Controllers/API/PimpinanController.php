@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Barang;
 use App\DetailPenjualan;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Bulan\BulanCollection;
@@ -99,6 +100,12 @@ class PimpinanController extends Controller
     public function detailPenjualan($id)
     {
         $penjualan = Penjualan::where('id', $id)->first();
+        if (!$penjualan) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
         $detailPenjualan = DetailPenjualan::where('penjualan_id', $penjualan->id)->get();
 
         return response()->json(new DetailPenjualanCollection($detailPenjualan), Response::HTTP_OK);
@@ -142,9 +149,11 @@ class PimpinanController extends Controller
         $penjualan = Penjualan::where('bulan', $bulan)->get()->count();
         $namaBulan = LabaRugi::where('bulan', $bulan)->first();
         if (!$namaBulan) {
-            $namaBulan = "Belum ada data masuk";
+            return Response()->json([
+                "status" => "failed",
+                "message" => "belum ada data yang masuk",
+            ], 400);
         }
-
         $pemasukan = LabaRugi::where('bulan', $bulan)->get()->sum('total_pemasukan');
         $pengeluaran = LabaRugi::where('bulan', $bulan)->get()->sum('total_pengeluaran');
         $labaRugi = LabaRugi::where('bulan', $bulan)->get()->sum('hasil');
@@ -167,20 +176,35 @@ class PimpinanController extends Controller
     public function laporanLabaRugi($hari)
     {
         $labaRugi = LabaRugi::where('hari', $hari)->first();
-        $jumlah_barang = DetailPenjualan::whereDate('created_at', $hari)->sum('jumlah_barang');
-        $pendapatan = $labaRugi->total_pemasukan;
-        dd($pendapatan); 
-        if ($labaRugi == "[]") {
+        if (!$labaRugi) {
             return Response()->json([
                 "status" => "failed",
                 "message" => "data tidak ditemukan",
             ], 400);
         }
 
+        $jumlah_barang = DetailPenjualan::whereDate('created_at', $hari)->sum('jumlah_barang');
+        // dd($jumlah_barang);
+        $pendapatan = $labaRugi->total_pemasukan;
+        $detail_barang = DetailPenjualan::whereDate('created_at', $hari)->get();
+        foreach ($detail_barang as $barang) {
+            $barangDB = Barang::where('id', $barang->barang_id)->first();
+            $keuntunganarr[] = $barang->jumlah_barang * ($barangDB->harga_jual - $barangDB->harga_beli);
+            $keuntungan = array_sum($keuntunganarr);
+            if ($keuntunganarr) {
+                $keuntungan = array_sum($keuntunganarr);
+            } else {
+                $keuntungan  = 10;
+            }
+        }
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'data berhasil ditampilkan',
-            "data"      =>  new LaporanResource($labaRugi),
+            "data"      =>  [
+                'jumlah_penjualan'  => $jumlah_barang,
+                'pendapatan'        => $pendapatan,
+                'keuntungan'        => $keuntungan,
+            ],
         ]);
     }
 
