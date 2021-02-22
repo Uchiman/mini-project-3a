@@ -15,8 +15,8 @@ class BulanCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'status' => 'Success',
-            'message' => 'Data berhasil ditampilkan',
+            'status' => 'success',
+            'message' => 'data berhasil ditampilkan',
             'data' => BulanResource::collection($this->collection),
         ];
     }

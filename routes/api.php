@@ -29,7 +29,9 @@ Route::post('verify-email', 'API\EmailController@verifyEmail')->middleware('jwt.
 
 // kasir
 Route::group(['middleware' => ['jwt.verify']], function () {
+    // registrasi member
     Route::post('register-member', 'API\MemberController@registerMember');
+    // penjualan
     Route::post('kasir', 'API\KasirController@detailPenjualan');
     Route::post('kasir2', 'API\KasirController@hasilPenjualan');
     Route::get('kuitansi1', 'API\KasirController@kuitansi1');
@@ -37,6 +39,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('kuitansi3', 'API\KasirController@kuitansi3');
     Route::put('kasir/{id}', 'API\KasirController@updateData');
     Route::delete('kasir/{id}', 'API\KasirController@destroyData');
+    // absen
+    Route::post('absen', 'API\KasirController@absen');
+    Route::get('absen-status', 'API\KasirController@dataAbsen');
 });
 
 
@@ -70,6 +75,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('input-kategori/{id}', 'API\PimpinanController@deleteKategori');
     // laporan laba rugi
     Route::get('laporan-laba/{hari}', 'API\PimpinanController@laporanLabaRugi');
+    // kode absen
+    Route::post('kode-absen', 'API\PimpinanController@kodeAbsen');
+    Route::get('kode-absen', 'API\PimpinanController@kodeAbsenHarian');
+
 });
 
 

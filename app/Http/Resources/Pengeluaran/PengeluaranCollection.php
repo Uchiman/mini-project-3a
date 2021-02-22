@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Barang;
+namespace App\Http\Resources\Pengeluaran;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class BarangCollection extends ResourceCollection
+class PengeluaranCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -17,7 +17,7 @@ class BarangCollection extends ResourceCollection
         return [
             'status' => 'success',
             'message' => 'data berhasil ditampilkan',
-            'data' => BarangResource::collection($this->collection),
+            'data' => PengeluaranResource::collection($this->collection),
         ];
     }
 }

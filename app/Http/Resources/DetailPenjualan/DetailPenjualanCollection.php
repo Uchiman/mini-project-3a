@@ -18,8 +18,8 @@ class DetailPenjualanCollection extends ResourceCollection
         $dataTerakhir = DetailPenjualan::latest()->first();
         $total_bayar = DetailPenjualan::where('penjualan_id', $dataTerakhir->penjualan_id)->sum('harga_jual');
         return [
-            'status' => 'Success',
-            'message' => 'Data berhasil ditampilkan',
+            'status' => 'success',
+            'message' => 'data berhasil ditampilkan',
             'data' => DetailPenjualanResource::collection($this->collection),
             'total_bayar' => $total_bayar,
         ];

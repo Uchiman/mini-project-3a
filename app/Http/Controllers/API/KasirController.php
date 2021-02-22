@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Absen;
 use App\Barang;
 use App\DetailPenjualan;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use App\Http\Resources\DetailPenjualan\DetailPenjualanResource;
 use App\Http\Resources\Penjualan\PenjualanCollection;
 use App\Http\Resources\Penjualan\PenjualanResource;
 use App\Kasir;
+use App\KodeAbsen;
 use App\LabaRugi;
 use App\LaporanStok;
 use App\Member;
@@ -290,5 +292,62 @@ class KasirController extends Controller
         ], Response::HTTP_OK);
     }
 
-    
+    // absen harian
+    public function absen(Request $request)
+    {
+        $hari_ini = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
+        $user_id = Auth::id();
+        $kode = KodeAbsen::whereDate('created_at', $hari_ini)->first();
+        $absen = Absen::whereDate('created_at', $hari_ini)->where('user_id', $user_id)->first();
+        if ($absen) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "sudah absen hari ini",
+            ], 400);
+        }
+        $absen = new Absen();
+        $absen->kode_id = $request->kode;
+        if ($request->kode != $kode->kode) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "kode salah",
+            ], 400);
+        }
+        $absen->user_id = $user_id;
+        $absen->created_at = $hari_ini;
+        $absen->kode_id = $kode->id;
+        $absen->absen = true;
+        $absen->save();
+
+        return response()->json([
+            'status'    =>  'success',
+            'message'   =>  'absen berhasil',
+        ], Response::HTTP_OK);
+    }
+
+    // status absen per bulan
+    public function dataAbsen()
+    {
+        $user_id = Auth::id();
+        $bulan_ini = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('m');
+        $tahun_ini = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y');
+        $absen = Absen::where('user_id', $user_id)->whereYear('created_at', $tahun_ini)->whereMonth('created_at', $bulan_ini)->get();
+        $dataAbsen = KodeAbsen::whereYear('created_at', $tahun_ini)->whereMonth('created_at', $bulan_ini)->get();
+
+        $totalAbsen = count($dataAbsen);
+        $absenUser = count($absen);
+        if ($absenUser == 0) {
+            return response()->json([
+                'status'    =>  'success',
+                'message'   =>  'presentasi absensi bulan ini',
+                'data'      => 0,
+            ], Response::HTTP_OK);
+        }
+        $hasil = $totalAbsen / $absenUser * 100;
+        return response()->json([
+            'status'    =>  'success',
+            'message'   =>  'presentasi absensi bulan ini',
+            'data'      => $hasil ?: 0,
+        ], Response::HTTP_OK);
+    }
 }

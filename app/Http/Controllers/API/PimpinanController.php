@@ -12,8 +12,10 @@ use App\Http\Resources\Laporan\LaporanCollection;
 use App\Http\Resources\Laporan\LaporanResource;
 use App\Http\Resources\LaporanStok\LaporanStokCollection;
 use App\Http\Resources\Pembelian\PembelianCollection;
+use App\Http\Resources\Pengeluaran\PengeluaranCollection;
 use App\Http\Resources\Penjualan\PenjualanCollection;
 use App\Kategori;
+use App\KodeAbsen;
 use App\LabaRugi;
 use App\LaporanStok;
 use App\Pembelian;
@@ -266,12 +268,14 @@ class PimpinanController extends Controller
     public function semuaPengeluaran()
     {
         $pengeluaran = Pengeluaran::all();
+        if (count($pengeluaran) == null) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "belum ada data yang masuk",
+            ], 400);
+        }
 
-        return response()->json([
-            'status'    =>  'success',
-            'message'   =>  'data berhasil ditampilkan',
-            "data"      =>  $pengeluaran,
-        ], Response::HTTP_OK);
+        return response()->json(new PengeluaranCollection($pengeluaran), Response::HTTP_OK);
     }
 
 
@@ -355,7 +359,7 @@ class PimpinanController extends Controller
     // melihat data pengeluaran semua
     public function semuaSupplier()
     {
-        $supplier = Supplier::all();
+        $supplier = Supplier::all('id', 'nama', 'alamat');
 
         return response()->json([
             'status'    =>  'success',
@@ -440,7 +444,7 @@ class PimpinanController extends Controller
     // melihat data pengeluaran semua
     public function semuaKategori()
     {
-        $kategori = Kategori::all();
+        $kategori = Kategori::all('id', 'nama');
 
         return response()->json([
             'status'    =>  'success',
@@ -486,6 +490,52 @@ class PimpinanController extends Controller
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'data berhasil dihapus',
+        ], Response::HTTP_OK);
+    }
+
+    /**
+     * ABSEN
+     * @return void
+     */
+
+    public function kodeAbsen()
+    {
+        $created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
+        $kodeAbsen = KodeAbsen::whereDate('created_at', $created_at)->first();
+        if ($kodeAbsen) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "kode absen untuk hari ini sudah ada",
+            ], 400);
+        }
+        $kodeAbsen = new KodeAbsen();
+        $kodeAbsen->kode = mt_rand(100000, 999999);
+        $kodeAbsen->created_at = $created_at;
+        $kodeAbsen->save();
+        return response()->json([
+            'status'    =>  'success',
+            'message'   =>  'data berhasil ditampilkan',
+            "data"      =>  $kodeAbsen,
+        ], Response::HTTP_OK);
+    }
+
+    public function kodeAbsenHarian()
+    {
+        $created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
+        $kodeAbsen = KodeAbsen::whereDate('created_at', $created_at)->first();
+        if (!$kodeAbsen) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "kode absen belum dibuat",
+            ], 400);
+        }
+        return response()->json([
+            'status'    =>  'success',
+            'message'   =>  'data berhasil ditampilkan',
+            'data'      =>  [
+                'kode'      =>  $kodeAbsen->kode,
+                'tanggal'   =>  $created_at->format('d-F-Y')
+            ],
         ], Response::HTTP_OK);
     }
 }
