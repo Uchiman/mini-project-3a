@@ -56,7 +56,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => null,
             'kode' => null,
         ]);
-        $member->assignRole('member');
+        $member->assignRole('kasir');
 
         $member = User::create([
             'name' => 'Nabil Aramiko',
@@ -65,6 +65,6 @@ class UserSeeder extends Seeder
             'email_verified_at' => null,
             'kode' => null,
         ]);
-        $member->assignRole('member');
+        $member->assignRole('kasir');
     }
 }

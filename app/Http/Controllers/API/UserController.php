@@ -41,6 +41,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'role' => 'required',
         ]);
 
         if($validator->fails()){
@@ -52,6 +53,10 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
+        
+        // tambahkan role
+        $user->assignRole($request->role);
+        $user->save();
 
         $token = JWTAuth::fromUser($user);
 

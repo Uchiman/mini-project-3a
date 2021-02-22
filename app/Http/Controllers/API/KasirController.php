@@ -298,6 +298,12 @@ class KasirController extends Controller
         $hari_ini = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
         $user_id = Auth::id();
         $kode = KodeAbsen::whereDate('created_at', $hari_ini)->first();
+        if (!$kode) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "absen belum dibuka",
+            ], 400);
+        }
         $absen = Absen::whereDate('created_at', $hari_ini)->where('user_id', $user_id)->first();
         if ($absen) {
             return Response()->json([
@@ -339,14 +345,14 @@ class KasirController extends Controller
         if ($absenUser == 0) {
             return response()->json([
                 'status'    =>  'success',
-                'message'   =>  'presentasi absensi bulan ini',
+                'message'   =>  'persentase absensi bulan ini',
                 'data'      => 0,
             ], Response::HTTP_OK);
         }
-        $hasil = $totalAbsen / $absenUser * 100;
+        $hasil = $totalAbsen * 100 / $absenUser;
         return response()->json([
             'status'    =>  'success',
-            'message'   =>  'presentasi absensi bulan ini',
+            'message'   =>  'persentase absensi bulan ini',
             'data'      => $hasil ?: 0,
         ], Response::HTTP_OK);
     }

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Absen;
 use App\Barang;
 use App\DetailPenjualan;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Absen\AbsenCollection;
+use App\Http\Resources\Absen\AbsenController;
+use App\Http\Resources\Absen\AbsenResource;
 use App\Http\Resources\Bulan\BulanCollection;
 use App\Http\Resources\DetailPenjualan\DetailPenjualanCollection;
 use App\Http\Resources\Hari\HariCollection;
@@ -537,5 +541,28 @@ class PimpinanController extends Controller
                 'tanggal'   =>  $created_at->format('d-F-Y')
             ],
         ], Response::HTTP_OK);
+    }
+
+    public function laporanAbsen($bulan)
+    {
+        $date = explode('-', $bulan);
+        $year = $date[0];
+        $month = $date[1];
+        $absen = Absen::whereMonth('created_at', $month)->whereYear('created_at', $year)->get();
+        $res  = [];
+        foreach ($absen as $vals) {
+            if (array_key_exists($vals['user_id'], $res)) {
+                $res[$vals['user_id']]['absen']    += $vals['absen'];
+            } else {
+                $res[$vals['user_id']]  = $vals;
+            }
+        }
+        if (count($absen) == null) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+        return response()->json(new AbsenCollection($res), Response::HTTP_OK);
     }
 }

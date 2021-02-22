@@ -27,9 +27,5 @@ class RoleSeeder extends Seeder
         Role::create([
             'name' => 'staff'
         ]);
-
-        Role::create([
-            'name' => 'member'
-        ]);
     }
 }

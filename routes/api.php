@@ -78,6 +78,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // kode absen
     Route::post('kode-absen', 'API\PimpinanController@kodeAbsen');
     Route::get('kode-absen', 'API\PimpinanController@kodeAbsenHarian');
+    Route::get('laporan-absen-bulan/{bulan}', 'API\PimpinanController@laporanAbsen');
 
 });
 
