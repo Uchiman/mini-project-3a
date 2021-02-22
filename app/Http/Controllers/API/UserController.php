@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Absen;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Kategori\KategoriCollection;
 use App\Http\Resources\User\UserResource;
 use App\Kategori;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -56,6 +58,14 @@ class UserController extends Controller
         
         // tambahkan role
         $user->assignRole($request->role);
+        if ($request->role == 'kasir') {
+            $absen = new Absen();
+            $absen->user_id = $user->id;
+            $absen->absen = 0;
+            $absen->kode_id = 1;
+            $absen->created_at = Carbon::yesterday();
+            $absen->save();
+        }
         $user->save();
 
         $token = JWTAuth::fromUser($user);

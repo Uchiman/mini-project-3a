@@ -311,7 +311,7 @@ class KasirController extends Controller
                 "message" => "sudah absen hari ini",
             ], 400);
         }
-        $absen = new Absen();
+        $absen = Absen::where('user_id', $user_id)->where('absen', 0)->first();
         $absen->kode_id = $request->kode;
         if ($request->kode != $kode->kode) {
             return Response()->json([
@@ -337,7 +337,7 @@ class KasirController extends Controller
         $user_id = Auth::id();
         $bulan_ini = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('m');
         $tahun_ini = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y');
-        $absen = Absen::where('user_id', $user_id)->whereYear('created_at', $tahun_ini)->whereMonth('created_at', $bulan_ini)->get();
+        $absen = Absen::where('user_id', $user_id)->where('absen', 1)->whereYear('created_at', $tahun_ini)->whereMonth('created_at', $bulan_ini)->get();
         $dataAbsen = KodeAbsen::whereYear('created_at', $tahun_ini)->whereMonth('created_at', $bulan_ini)->get();
 
         $totalAbsen = count($dataAbsen);
@@ -353,7 +353,7 @@ class KasirController extends Controller
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'persentase absensi bulan ini',
-            'data'      => $hasil ?: 0,
+            'data'      => $hasil,
         ], Response::HTTP_OK);
     }
 }

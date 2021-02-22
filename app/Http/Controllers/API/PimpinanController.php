@@ -512,7 +512,18 @@ class PimpinanController extends Controller
                 "message" => "kode absen untuk hari ini sudah ada",
             ], 400);
         }
-        $kodeAbsen = new KodeAbsen();
+        $kodeAbsen = KodeAbsen::where('kode', 0)->first();
+        if (!$kodeAbsen) {
+            $newKode = new KodeAbsen();
+            $newKode->kode = mt_rand(100000, 999999);
+            $newKode->created_at = $created_at;
+            $newKode->save();
+            return response()->json([
+                'status'    =>  'success',
+                'message'   =>  'data berhasil ditampilkan',
+                "data"      =>  $newKode,
+            ], Response::HTTP_OK);
+        }
         $kodeAbsen->kode = mt_rand(100000, 999999);
         $kodeAbsen->created_at = $created_at;
         $kodeAbsen->save();
