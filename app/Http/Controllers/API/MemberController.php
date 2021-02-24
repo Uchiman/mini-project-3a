@@ -17,7 +17,7 @@ class MemberController extends Controller
 {
     public function loginMember(Request $request)
     {
-        
+
         $member = Member::where('no_hp', $request->no_hp)->first();
         if (!$member) {
             return Response()->json([
@@ -38,10 +38,9 @@ class MemberController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
             'no_hp' => 'required|numeric|unique:members',
-            'kode_member' => 'numeric|min:6|unique:members',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 
@@ -53,13 +52,81 @@ class MemberController extends Controller
             'saldo' => 0,
         ]);
 
-        return response()->json(compact('member'),201);
+        return response()->json(compact('member'), 201);
     }
 
-    public function getInfo($id)
+    // data semua member
+    public function allMember()
     {
-        $member = Member::where('id', $id)->get();
+        $member = Member::all();
         return response()->json(new MemberCollection($member), Response::HTTP_OK);
     }
 
+    // data member berdasarkan kode
+    public function getMember($kode)
+    {
+
+        $member = Member::where('kode_member', $kode)->first();
+        if (!$member) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+        return response()->json([
+            'status'    =>  'success',
+            'message'   =>  'transaksi berhasil',
+            "data"      =>  new MemberResource($member),
+        ], Response::HTTP_OK);
+    }
+
+    // edit member berdasarkan kode
+    public function editMember(Request $request, $kode)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string|max:255',
+            'no_hp' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $member = Member::where('kode_member', $kode)->first();
+        if (!$member) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+
+        $member->nama = $request->nama;
+        $member->no_hp = $request->no_hp;
+        $member->save();
+
+        return response()->json([
+            'status'    =>  'success',
+            'message'   =>  'transaksi berhasil',
+            "data"      =>  new MemberResource($member),
+        ], Response::HTTP_OK);
+    }
+
+    // hapus member
+    public function hapusMember($kode)
+    {
+        $member = Member::where('kode_member', $kode)->first();
+        if (!$member) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+
+        $member->delete();
+
+        return response()->json([
+            'status'    =>  'success',
+            'message'   =>  'member berhasil dihapus',
+        ], Response::HTTP_OK);
+    }
 }

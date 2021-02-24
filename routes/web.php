@@ -13,12 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// datatable
+Route::get('staff/barang/data', 'DataController@barang')->name('barang.data');
+
+Route::resource('staff/barang', 'BarangController');
+
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/test', 'HomeController@test')->name('test');

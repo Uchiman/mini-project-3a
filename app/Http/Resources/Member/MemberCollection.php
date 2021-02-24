@@ -15,7 +15,9 @@ class MemberCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'member' => MemberResource::collection($this->collection),
+            'status' => 'success',
+            'message' => 'data berhasil ditampilkan',
+            'data' => MemberResource::collection($this->collection),
         ];
     }
 }

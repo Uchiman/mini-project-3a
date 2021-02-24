@@ -103,4 +103,12 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 });
 
 // member
-Route::post('login-member', 'API\MemberController@loginMember');
+Route::group(['middleware' => ['jwt.verify']], function () {
+    // member
+    Route::post('login-member', 'API\MemberController@loginMember');
+    Route::get('info-member/{kode}', 'API\MemberController@getMember');
+    Route::get('info-member', 'API\MemberController@allMember');
+    Route::put('edit-member/{kode}', 'API\MemberController@editMember');
+    Route::delete('hapus-member/{kode}', 'API\MemberController@hapusMember');
+
+});
