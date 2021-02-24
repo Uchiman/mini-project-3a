@@ -277,6 +277,27 @@ class StaffController extends Controller
 
         $barang->update();
 
+        $hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
+        $bulan = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
+
+        // masukkan ke database stok
+        $stokBarang = LaporanStok::where('hari', $hari)->where('bulan', $bulan)->where('barang_id', $barang->id)->first();
+        if (!$stokBarang) {
+            $stokBarang = new LaporanStok();
+            $stokBarang->barang_id = $barang->id;
+            $stokBarang->barang_masuk = $barang->stok - $barang->stok;
+            $stokBarang->sisa = $barang->stok;
+            $stokBarang->hari =  $hari;
+            $stokBarang->bulan =  $bulan;
+            $stokBarang->save();
+        }
+        $stokBarang->barang_id = $barang->id;
+        $stokBarang->barang_masuk =  $request->stok;
+        $stokBarang->sisa = $barang->stok;
+        $stokBarang->hari =  $hari;
+        $stokBarang->bulan =  $bulan;
+        $stokBarang->save();
+        
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'berhasil update barang',

@@ -190,8 +190,15 @@ class PimpinanController extends Controller
         }
 
         $jumlah_barang = DetailPenjualan::whereDate('created_at', $hari)->sum('jumlah_barang');
+        if (!$jumlah_barang) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
         $pendapatan = $labaRugi->total_pemasukan;
         $detail_barang = DetailPenjualan::whereDate('created_at', $hari)->get();
+        
         foreach ($detail_barang as $barang) {
             $barangDB = Barang::where('id', $barang->barang_id)->first();
             $keuntunganarr[] = $barang->jumlah_barang * ($barangDB->harga_jual - $barangDB->harga_beli);
@@ -199,7 +206,7 @@ class PimpinanController extends Controller
             if ($keuntunganarr) {
                 $keuntungan = array_sum($keuntunganarr);
             } else {
-                $keuntungan  = 10;
+                $keuntungan  = 0;
             }
         }
         return response()->json([

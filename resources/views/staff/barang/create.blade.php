@@ -1,18 +1,20 @@
 @extends('templates.default')
 
 @section('content')
-    <div class="box">
-        <div class="box-header">
 
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Input Data Barang</h3>
         </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form action="{{ route('barang.store') }}" method="POST">
+            @csrf
+            <div class="card-body">
 
-        <div class="box-body">
-            <form action="{{ route('barang.store') }}" method="POST">
-                @csrf
-
-                <div class="form-group @error('nama') has-error @enderror">
-                    <label for="">Nama Barang</label>
-                    <input type="text" name="nama" class="form-control" placeholder="Masukkan nama barang"
+                <div class="form-group  @error('nama') has-error @enderror">
+                    <label for="exampleInputEmail1">Nama Barang</label>
+                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama barang"
                         value="{{ old('nama') }}">
                     @error('nama')
                         <span class="help-block">{{ $message }}</span>
@@ -21,8 +23,8 @@
 
                 <div class="form-group @error('harga_beli') has-error @enderror">
                     <label for="">Harga Beli</label>
-                    <input type="text" name="harga_beli" class="form-control" placeholder="Masukkan harga beli barang per pcs"
-                        value="{{ old('harga_beli') }}">
+                    <input type="text" name="harga_beli" class="form-control"
+                        placeholder="Masukkan harga beli barang per pcs" value="{{ old('harga_beli') }}">
                     @error('harga_beli')
                         <span class="help-block">{{ $message }}</span>
                     @enderror
@@ -30,17 +32,18 @@
 
                 <div class="form-group @error('harga_jual') has-error @enderror">
                     <label for="">Harga Jual</label>
-                    <input type="text" name="harga_jual" class="form-control" placeholder="Masukkan harga jual barang per pcs"
-                        value="{{ old('harga_jual') }}">
+                    <input type="text" name="harga_jual" class="form-control"
+                        placeholder="Masukkan harga jual barang per pcs" value="{{ old('harga_jual') }}">
                     @error('harga_jual')
                         <span class="help-block">{{ $message }}</span>
                     @enderror
                 </div>
 
-                <div class="form-group @error('kategori') has-error @enderror">
-                    <label for="">Kategori</label>
-                    <select class="custom-select" @error('kategori_id') is-invalid @enderror id="kategori_id" name="kategori_id" required>
-                        <option selected>Masukkan kategori barang ...</option>
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select class="form-control select2" style="width: 100%;" @error('kategori_id') is-invalid @enderror
+                        id="kategori_id" name="kategori_id" required>
+                        <option selected="selected">Masukkan kategori barang ..</option>
                         @foreach ($kategoris as $kategori)
                             <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
                         @endforeach
@@ -74,11 +77,13 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <input type="submit" value="Tambah" class="btn btn-primary">
-                </div>
+            </div>
+            <!-- /.card-body -->
 
-            </form>
-        </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
     </div>
+
 @endsection

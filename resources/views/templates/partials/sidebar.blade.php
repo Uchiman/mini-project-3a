@@ -16,12 +16,39 @@
             <!-- Add icons to the links using the .nav-icon class
         with font-awesome or any other icon font library -->
             <li class="nav-item menu-open">
-                <a href="/home" class="nav-link active">
+                <a href="#" class="nav-link active">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
-                        Dashboard Staff
+                        Dashboard
+                        <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
+                <ul class="nav nav-treeview">
+                    @role('staff')
+                    <li class="nav-item">
+                        <a href="/staff" class="nav-link active">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Dashboard Staff</p>
+                        </a>
+                    </li>
+                    @endrole
+                    @role('kasir')
+                    <li class="nav-item">
+                        <a href="/kasir" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Dashboard Kasir</p>
+                        </a>
+                    </li>
+                    @endrole
+                    @role('pimpinan')
+                    <li class="nav-item">
+                        <a href="/pimpinan" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Dashboard Pimpinan</p>
+                        </a>
+                    </li>
+                    @endrole
+                </ul>
             </li>
             <li class="nav-item">
                 <a href="/staff/barang" class="nav-link">
@@ -33,7 +60,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/staff/pembelian" class="nav-link">
                     <i class="nav-icon fas fa-shopping-cart"></i>
                     <p>
                         Transaksi Pembelian
@@ -42,7 +69,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/staff/supplier" class="nav-link">
                     <i class="nav-icon fas fa-truck"></i>
                     <p>
                         Supplier
@@ -51,7 +78,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/staff/kategori" class="nav-link">
                     <i class="nav-icon fas fa-clipboard-list"></i>
                     <p>
                         Kategori
@@ -60,7 +87,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/staff/pengeluaran" class="nav-link">
                     <i class="nav-icon fas fa-money-bill"></i>
                     <p>
                         Pengeluaran

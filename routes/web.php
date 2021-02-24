@@ -15,8 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 // datatable
 Route::get('staff/barang/data', 'DataController@barang')->name('barang.data');
+Route::get('staff/pembelian/data', 'DataController@pembelian')->name('pembelian.data');
+Route::get('staff/supplier/data', 'DataController@supplier')->name('supplier.data');
+Route::get('staff/kategori/data', 'DataController@kategori')->name('kategori.data');
 
 Route::resource('staff/barang', 'BarangController');
+Route::resource('staff/pembelian', 'PembelianController');
+Route::resource('staff/supplier', 'SupplierController');
+Route::resource('staff/kategori', 'KategoriController');
 
 Route::get('/', function () {
     return view('welcome');

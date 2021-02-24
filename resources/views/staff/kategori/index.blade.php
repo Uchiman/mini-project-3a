@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="box-header">
-        <a href="{{ route('barang.create') }}" class="btn btn-app">
+        <a href="{{ route('kategori.create') }}" class="btn btn-app">
             <i class="fas fa-plus"></i> Tambah
         </a>
     </div>
@@ -11,7 +11,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Barang</h3>
+                        <h3 class="card-title">Data Kategori Barang</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -19,14 +19,7 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Nama</th>
-                                    <th>Kode</th>
-                                    <th>Harga Beli</th>
-                                    <th>Harga Jual</th>
-                                    <th>Kategori</th>
-                                    <th>Merek</th>
-                                    <th>Stok</th>
-                                    <th>Diskon</th>
+                                    <th>Nama Kategori Barang</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -78,7 +71,7 @@
             $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('barang.data') }}',
+                ajax: '{{ route('kategori.data') }}',
                 columns: [{
                         data: 'DT_RowIndex',
                         orderable: false,
@@ -89,27 +82,6 @@
                     },
                     {
                         data: 'nama'
-                    },
-                    {
-                        data: 'kode'
-                    },
-                    {
-                        data: 'harga_beli'
-                    },
-                    {
-                        data: 'harga_jual'
-                    },
-                    {
-                        data: 'kategori.nama'
-                    },
-                    {
-                        data: 'merek'
-                    },
-                    {
-                        data: 'stok'
-                    },
-                    {
-                        data: 'diskon'
                     },
                     {
                         data: 'action'
