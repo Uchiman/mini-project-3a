@@ -106,7 +106,7 @@ class MemberController extends Controller
 
         return response()->json([
             'status'    =>  'success',
-            'message'   =>  'transaksi berhasil',
+            'message'   =>  'data berhasil ditampilkan',
             "data"      =>  new MemberResource($member),
         ], Response::HTTP_OK);
     }
