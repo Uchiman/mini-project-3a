@@ -32,22 +32,6 @@
                         </a>
                     </li>
                     @endrole
-                    @role('kasir')
-                    <li class="nav-item">
-                        <a href="/kasir" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Dashboard Kasir</p>
-                        </a>
-                    </li>
-                    @endrole
-                    @role('pimpinan')
-                    <li class="nav-item">
-                        <a href="/pimpinan" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Dashboard Pimpinan</p>
-                        </a>
-                    </li>
-                    @endrole
                 </ul>
             </li>
             <li class="nav-item">
@@ -96,8 +80,9 @@
                 </a>
             </li>
             @endrole
-            @role('kasir')
 
+            {{-- DASHBOARD KASIR --}}
+            @role('kasir')
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -108,12 +93,23 @@
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Dashboard Kasir
+                                Dashboard
+                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            @role('kasir')
+                            <li class="nav-item">
+                                <a href="/kasir" class="nav-link active">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Dashboard Kasir</p>
+                                </a>
+                            </li>
+                            @endrole
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="/kasir/penjualan" class="nav-link">
                             <i class="nav-icon fas fa-cash-register"></i>
                             <p>
                                 Transaksi Penjualan
@@ -121,9 +117,19 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/kasir/member" class="nav-link">
+                            <i class="nav-icon fas fa-id-card"></i>
+                            <p>
+                                Member
+                                <span class="badge badge-info right"></span>
+                            </p>
+                        </a>
+                    </li>
                     @endrole
-                    @role('pimpinan')
 
+                    {{-- DASHBOARD PIMPINAN --}}
+                    @role('pimpinan')
                     <!-- Sidebar Menu -->
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -134,9 +140,20 @@
                                 <a href="#" class="nav-link active">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        Dashboard Pimpinan
+                                        Dashboard
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    @role('pimpinan')
+                                    <li class="nav-item">
+                                        <a href="/pimpinan" class="nav-link active">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Dashboard Pimpinan</p>
+                                        </a>
+                                    </li>
+                                    @endrole
+                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
@@ -460,103 +477,24 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-header">MISCELLANEOUS</li>
+                            <li class="nav-header">AKUN SAYA</li>
                             <li class="nav-item">
                                 <a href="iframe.html" class="nav-link">
-                                    <i class="nav-icon fas fa-ellipsis-h"></i>
-                                    <p>Tabbed IFrame Plugin</p>
+                                    <i class="nav-icon fas fa-user-alt"></i>
+                                    <p>Info akun</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://adminlte.io/docs/3.1/" class="nav-link">
-                                    <i class="nav-icon fas fa-file"></i>
-                                    <p>Documentation</p>
+                                <a href={{ route('logout') }}" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();" class="nav-link">
+                                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                                    <p>Keluar</p>
                                 </a>
                             </li>
-                            <li class="nav-header">MULTI LEVEL EXAMPLE</li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-circle nav-icon"></i>
-                                    <p>Level 1</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-circle"></i>
-                                    <p>
-                                        Level 1
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Level 2</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>
-                                                Level 2
-                                                <i class="right fas fa-angle-left"></i>
-                                            </p>
-                                        </a>
-                                        <ul class="nav nav-treeview">
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link">
-                                                    <i class="far fa-dot-circle nav-icon"></i>
-                                                    <p>Level 3</p>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link">
-                                                    <i class="far fa-dot-circle nav-icon"></i>
-                                                    <p>Level 3</p>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" class="nav-link">
-                                                    <i class="far fa-dot-circle nav-icon"></i>
-                                                    <p>Level 3</p>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Level 2</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-circle nav-icon"></i>
-                                    <p>Level 1</p>
-                                </a>
-                            </li>
-                            <li class="nav-header">LABELS</li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon far fa-circle text-danger"></i>
-                                    <p class="text">Important</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon far fa-circle text-warning"></i>
-                                    <p>Warning</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon far fa-circle text-info"></i>
-                                    <p>Informational</p>
-                                </a>
-                            </li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
                         </ul>
                     </nav>
                     <!-- /.sidebar-menu -->

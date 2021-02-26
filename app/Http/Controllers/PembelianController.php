@@ -48,6 +48,8 @@ class PembelianController extends Controller
             'total_bayar'     =>  'required|numeric',
         ]);
 
+        $hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
+        $bulan = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
         // masukkan ke database pembelian
         $pembelian = new Pembelian();
         // jika supplier tidak ditemukan
@@ -62,13 +64,11 @@ class PembelianController extends Controller
         $pembelian->barang              = $request->barang;
         $pembelian->total_barang        = $request->total_barang;
         $pembelian->total_bayar         = $request->total_bayar;
-        $pembelian->hari                = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
-        $pembelian->bulan               = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
+        $pembelian->hari                = $hari;
+        $pembelian->bulan               = $bulan;
 
         $pembelian->save();
 
-        $hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
-        $bulan = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
         // masukkan ke database laba_rugi
         $labaRugi = LabaRugi::where('hari', $hari)->first();
         if (!$labaRugi) {

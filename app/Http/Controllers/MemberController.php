@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Kategori;
+use App\Member;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
-class KategoriController extends Controller
+class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +18,7 @@ class KategoriController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('staff.kategori.index', compact('user'));
+        return view('kasir.member.index', compact('user'));
     }
 
     /**
@@ -27,7 +29,7 @@ class KategoriController extends Controller
     public function create()
     {
         $user = Auth::user();
-        return view('staff.kategori.create', compact('user'));
+        return view('kasir.member.create', compact('user'));
     }
 
     /**
@@ -39,15 +41,20 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama'          =>  'required',
+            'nama' => 'required|string|max:255',
+            'no_hp' => 'required|numeric|unique:members',
         ]);
 
-        $kategori = new Kategori();
-        $kategori->nama = $request->nama;
+        $member = new Member();
+        $member->nama = $request->nama;
+        $member->no_hp = $request->no_hp;
+        $member->kode_member = Str::random(6);
+        $member->hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
+        $member->saldo = 0;
+        $member->created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
+        $member->save();
 
-        $kategori->save();
-
-        return redirect()->route('kategori.index')->with('success', 'Data kategori berhasil ditambahkan');
+        return redirect()->route('member.index')->with('success', 'Data member berhasil ditambahkan');
     }
 
     /**
@@ -70,8 +77,8 @@ class KategoriController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $kategori = Kategori::find($id);
-        return view('staff.kategori.edit', compact('user', 'kategori'));
+        $member = Member::find($id);
+        return view('kasir.member.edit', compact('user', 'member'));
     }
 
     /**
@@ -84,15 +91,17 @@ class KategoriController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama'          =>  'required',
+            'nama' => 'required|string|max:255',
+            'no_hp' => 'required|numeric',
         ]);
 
-        $kategori = Kategori::find($id);
-        $kategori->nama = $request->nama;
+        $member = Member::find($id);
+        $member->nama = $request->nama;
+        $member->no_hp = $request->no_hp;
 
-        $kategori->save();
+        $member->save();
 
-        return redirect()->route('kategori.index')->with('info', 'Data kategori berhasil diupdate');
+        return redirect()->route('member.index')->with('info', 'Data member berhasil diupdate');
     }
 
     /**
@@ -103,10 +112,10 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
-        $kategori = Kategori::find($id);
+        $member = Member::find($id);
 
-        $kategori->delete();
+        $member->delete();
 
-        return redirect()->route('kategori.index')->with('danger', 'Data kategori berhasil dihapus');
+        return redirect()->route('member.index')->with('danger', 'Data member berhasil dihapus');
     }
 }

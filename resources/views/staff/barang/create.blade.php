@@ -43,7 +43,7 @@
                     <label>Kategori</label>
                     <select class="form-control select2" style="width: 100%;" @error('kategori_id') is-invalid @enderror
                         id="kategori_id" name="kategori_id" required>
-                        <option selected="selected">Masukkan kategori barang ..</option>
+                        <option selected disabled="selected">Masukkan kategori barang ..</option>
                         @foreach ($kategoris as $kategori)
                             <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
                         @endforeach

@@ -44,13 +44,14 @@ class MemberController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
-        $member = Member::create([
-            'nama' => $request->get('nama'),
-            'no_hp' => $request->get('no_hp'),
-            'kode_member' => Str::random(6),
-            'created_at' => Carbon::now(new \DateTimeZone('Asia/Jakarta')),
-            'saldo' => 0,
-        ]);
+        $member = new Member();
+        $member->nama = $request->nama;
+        $member->no_hp = $request->no_hp;
+        $member->kode_member = Str::random(6);
+        $member->hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
+        $member->saldo = 0;
+        $member->created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
+        $member->save();
 
         return response()->json(compact('member'), 201);
     }

@@ -7,7 +7,7 @@
             <!-- /.login-logo -->
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
-                    <a href="assets/index2.html" class="h1"><b>Admin</b>LTE</a>
+                    <a href="#" class="h1"><b>Sales</b>Stock</a>
                 </div>
                 <div class="card-body">
                     <p class="login-box-msg">Sign in to start your session</p>

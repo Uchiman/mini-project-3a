@@ -19,7 +19,7 @@ class CreateMembersTable extends Migration
             $table->string('no_hp');
             $table->string('kode_member');
             $table->integer('saldo');
-            $table->integer('kode')->nullable();
+            $table->string('hari');
             $table->timestamps();
         });
     }

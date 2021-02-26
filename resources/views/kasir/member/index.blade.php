@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="box-header">
-        <a href="{{ route('pembelian.create') }}" class="btn btn-app">
+        <a href="{{ route('member.create') }}" class="btn btn-app">
             <i class="fas fa-plus"></i> Tambah
         </a>
     </div>
@@ -11,7 +11,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Barang</h3>
+                        <h3 class="card-title">Data Member</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -19,11 +19,10 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Supplier</th>
-                                    <th>Barang</th>
-                                    <th>Total Barang</th>
-                                    <th>Total Bayar</th>
-                                    <th>Tanggal Pembelian</th>
+                                    <th>Nama</th>
+                                    <th>Nomer Hp</th>
+                                    <th>Kode Member</th>
+                                    <th>Bergabung Pada</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -76,7 +75,7 @@
             $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('pembelian.data') }}',
+                ajax: '{{ route('member.data') }}',
                 columns: [{
                         data: 'DT_RowIndex',
                         orderable: false,
@@ -86,23 +85,20 @@
                         autoWidth: false,
                     },
                     {
-                        data: 'supplier'
+                        data: 'nama'
                     },
                     {
-                        data: 'barang'
+                        data: 'no_hp'
                     },
                     {
-                        data: 'total_barang'
-                    },
-                    {
-                        data: 'total_bayar'
+                        data: 'kode_member'
                     },
                     {
                         data: 'hari'
                     },
                     {
                         data: 'action'
-                    }
+                    },
                 ]
             });
         });

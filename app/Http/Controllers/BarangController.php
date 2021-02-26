@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Barang;
+use App\DetailPenjualan;
 use App\Kategori;
 use App\LaporanStok;
+use App\Penjualan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -182,7 +184,7 @@ class BarangController extends Controller
         $stokBarang->bulan =  $bulan;
         $stokBarang->save();
 
-        return redirect()->route('barang.index')->with('success', 'Data barang berhasil ditambahkan');
+        return redirect()->route('barang.index')->with('info', 'Data barang berhasil diupdate');
     }
 
     /**
