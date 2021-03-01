@@ -20,6 +20,9 @@ Route::get('staff/supplier/data', 'DataController@supplier')->name('supplier.dat
 Route::get('staff/kategori/data', 'DataController@kategori')->name('kategori.data');
 Route::get('staff/pengeluaran/data', 'DataController@pengeluaran')->name('pengeluaran.data');
 Route::get('kasir/member/data', 'DataController@member')->name('member.data');
+Route::get('pimpinan/stok-bulan/data', 'DataController@stokBulan')->name('stokBulan.data');
+Route::get('pimpinan/stok-hari/data', 'DataController@stokBulan')->name('stokHari.data');
+Route::get('pimpinan/laporan-bulan/data', 'DataController@dataBulan')->name('dataBulan.data');
 
 Route::get('/', function () {
     return view('auth.login');
@@ -52,4 +55,14 @@ Route::group(['middleware' => ['role:kasir']], function () {
     Route::post('/kasir2', 'PenjualanController@hasilPenjualan')->name('kasir2.store');
     // member
     Route::resource('kasir/member', 'MemberController');
+});
+
+
+Route::group(['middleware' => ['role:pimpinan']], function () {
+    // home
+    // laporan stok
+    Route::get('/pimpinan/stok/bulan', 'LaporanController@stokBulan')->name('pimpinan.stokBulan');
+    Route::get('/pimpinan/stok/hari', 'LaporanController@stokHari')->name('pimpinan.stokHari');
+    Route::get('/pimpinan/laporan/bulan', 'LaporanController@dataBulan')->name('pimpinan.dataBulan');
+    Route::get('/pimpinan/laporan/bulan/{bulan}', 'LaporanController@detailBulan')->name('pimpinan.detailBulan');
 });

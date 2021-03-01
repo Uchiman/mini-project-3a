@@ -160,33 +160,30 @@
                                     <i class="nav-icon fas fa-box"></i>
                                     <p>
                                         Laporan Stok
+                                        <i class="fas fa-angle-left right"></i>
                                         <span class="badge badge-info right"></span>
                                     </p>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-cash-register"></i>
-                                    <p>
-                                        Laporan Pembelian
-                                        <span class="badge badge-info right"></span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-shopping-cart"></i>
-                                    <p>
-                                        Laporan Penjualan
-                                        <span class="badge badge-info right"></span>
-                                    </p>
-                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/pimpinan/stok/hari" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Harian</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/pimpinan/stok/bulan" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Bulanan</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-chart-bar"></i>
                                     <p>
-                                        Laporan Laba Rugi
+                                        Laporan Bulanan
                                         <span class="badge badge-info right"></span>
                                     </p>
                                 </a>

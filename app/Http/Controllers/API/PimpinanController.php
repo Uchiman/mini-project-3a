@@ -102,7 +102,7 @@ class PimpinanController extends Controller
         return response()->json(new PenjualanCollection($penjualan), Response::HTTP_OK);
     }
 
-    //laporan detaip penjualan barang
+    //laporan detail penjualan barang
     public function detailPenjualan($id)
     {
         $penjualan = Penjualan::where('id', $id)->first();

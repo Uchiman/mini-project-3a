@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Barang;
 use App\Kategori;
+use App\LaporanStok;
 use App\Member;
 use App\Pembelian;
 use App\Pengeluaran;
+use App\Penjualan;
 use App\Supplier;
 use Illuminate\Http\Request;
 
@@ -79,6 +81,49 @@ class DataController extends Controller
 
         return datatables()->of($member)
             ->addColumn('action', 'kasir.member.action')
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->toJson();
+    }
+
+    // laporan stok bulanan
+    public function stokBulan()
+    {
+        $stokBarang = LaporanStok::with('barang')->get();
+
+        $res  = [];
+        foreach ($stokBarang as $vals) {
+            if (array_key_exists($vals['barang_id'], $res)) {
+                $res[$vals['barang_id']]['barang_masuk']    += $vals['barang_masuk'];
+                $res[$vals['barang_id']]['terjual']   += $vals['terjual'];
+                $res[$vals['barang_id']]['barang_id']        = $vals['barang_id'];
+            } else {
+                $res[$vals['barang_id']]  = $vals;
+            }
+        }
+
+        return datatables()->of($res)
+            ->addIndexColumn()
+            ->toJson();
+    }
+
+    // laporan stok harian
+    public function stokHari()
+    {
+        $stokBarang = LaporanStok::with('barang')->get();
+
+        return datatables()->of($stokBarang)
+            ->addIndexColumn()
+            ->toJson();
+    }
+
+    // laporan bulanan
+    public function dataBulan()
+    {
+        $bulan = LaporanStok::all()->unique('bulan');
+
+        return datatables()->of($bulan)
+            ->addColumn('action', 'pimpinan.laporan.action')
             ->addIndexColumn()
             ->rawColumns(['action'])
             ->toJson();
