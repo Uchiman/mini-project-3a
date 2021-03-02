@@ -36,10 +36,17 @@ class HomeController extends Controller
         return view('staff.home', compact('user'));
     }
 
-    // hme kasir
+    // home kasir
     public function kasir()
     {
         $user = Auth::user();
         return view('kasir.home', compact('user'));
+    }
+
+    // home pimpinan
+    public function pimpinan()
+    {
+        $user = Auth::user();
+        return view('pimpinan.home', compact('user'));
     }
 }

@@ -9,6 +9,7 @@
             offset: 20,
             z_index: 10000,
             delay: 1500
+            
         });
     @endif
 

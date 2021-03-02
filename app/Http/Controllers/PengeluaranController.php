@@ -45,14 +45,18 @@ class PengeluaranController extends Controller
             'biaya'        =>  'required|numeric',
         ]);
 
+        $hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
+        $bulan = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
+
         $pengeluaran = new Pengeluaran();
         $pengeluaran->keterangan    = $request->keterangan;
         $pengeluaran->biaya         = $request->biaya;
+        $pengeluaran->hari          = $hari;
+        $pengeluaran->bulan         = $bulan;
+        $pengeluaran->user_id       = Auth::id();
 
         $pengeluaran->save();
 
-        $hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
-        $bulan = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
         // masukkan ke database laba_rugi
         $labaRugi = LabaRugi::where('hari', $hari)->first();
         if (!$labaRugi) {
@@ -119,7 +123,7 @@ class PengeluaranController extends Controller
         $pengeluaran->hari = $hari;
         $pengeluaran->bulan = $bulan;
 
-        
+
         // masukkan ke database laba_rugi
         $labaRugi = LabaRugi::where('hari', $hari)->first();
         if (!$labaRugi) {

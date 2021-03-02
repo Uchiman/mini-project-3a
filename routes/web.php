@@ -21,7 +21,7 @@ Route::get('staff/kategori/data', 'DataController@kategori')->name('kategori.dat
 Route::get('staff/pengeluaran/data', 'DataController@pengeluaran')->name('pengeluaran.data');
 Route::get('kasir/member/data', 'DataController@member')->name('member.data');
 Route::get('pimpinan/stok-bulan/data', 'DataController@stokBulan')->name('stokBulan.data');
-Route::get('pimpinan/stok-hari/data', 'DataController@stokBulan')->name('stokHari.data');
+Route::get('pimpinan/stok-hari/data', 'DataController@stokHari')->name('stokHari.data');
 Route::get('pimpinan/laporan-bulan/data', 'DataController@dataBulan')->name('dataBulan.data');
 
 Route::get('/', function () {
@@ -55,6 +55,8 @@ Route::group(['middleware' => ['role:kasir']], function () {
     Route::post('/kasir2', 'PenjualanController@hasilPenjualan')->name('kasir2.store');
     // member
     Route::resource('kasir/member', 'MemberController');
+    // pengeluaran
+    Route::resource('kasir/pengeluaran', 'PengeluaranController');
 });
 
 
@@ -65,4 +67,9 @@ Route::group(['middleware' => ['role:pimpinan']], function () {
     Route::get('/pimpinan/stok/hari', 'LaporanController@stokHari')->name('pimpinan.stokHari');
     Route::get('/pimpinan/laporan/bulan', 'LaporanController@dataBulan')->name('pimpinan.dataBulan');
     Route::get('/pimpinan/laporan/bulan/{bulan}', 'LaporanController@detailBulan')->name('pimpinan.detailBulan');
+    Route::get('/pimpinan/laporan/bulan/pembelian/{bulan}', 'LaporanController@pembelianBulan')->name('pimpinan.pembelianBulan');
+    Route::get('/pimpinan/laporan/bulan/penjualan/{bulan}', 'LaporanController@penjualanBulan')->name('pimpinan.penjualanBulan');
+    Route::get('/pimpinan/laporan/bulan/penjualan/detail/{id}', 'LaporanController@detailPenjualan')->name('pimpinan.detailPenjualan');
+    Route::get('/pimpinan/laporan/bulan/pengeluaran/{bulan}', 'LaporanController@pengeluaranBulan')->name('pimpinan.pengeluaranBulan');
+    Route::get('/pimpinan/laporan/bulan/absensi/{bulan}', 'LaporanController@absensiBulan')->name('pimpinan.absensiBulan');
 });

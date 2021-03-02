@@ -150,13 +150,13 @@ class PenjualanController extends Controller
             $detailPenjualan->created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
             $detailPenjualan->save();
 
-            return redirect()->route('penjualan.index')->with('success', 'Data pengeluaran berhasil ditambahkan');
+            return redirect()->route('penjualan.index')->with('success', 'Data barang berhasil ditambahkan');
         }
         $detailPenjualan->jumlah_barang = $request->jumlah_barang + $detailPenjualan->jumlah_barang;
         $detailPenjualan->harga_jual = $barang->harga_jual * $detailPenjualan->jumlah_barang;
         $detailPenjualan->save();
 
-        return redirect()->route('penjualan.index')->with('success', 'Data pengeluaran berhasil ditambahkan');
+        return redirect()->route('penjualan.index')->with('success', 'Data barang berhasil ditambahkan');
     }
 
     public function hasilPenjualan(Request $request)
@@ -255,7 +255,7 @@ class PenjualanController extends Controller
         $labaRugi->hasil = $labaRugi->hasil + $penjualan->total_bayar;
         $labaRugi->save();
 
-        return redirect()->route('kasir.hasil')->with('success', 'Data pengeluaran berhasil ditambahkan');
+        return redirect()->route('kasir.hasil')->with('success', 'Data penjualan berhasil ditambahkan');
     }
 
     public function hasil()

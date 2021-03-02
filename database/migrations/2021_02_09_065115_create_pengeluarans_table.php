@@ -17,6 +17,7 @@ class CreatePengeluaransTable extends Migration
             $table->id();
             $table->string('keterangan');
             $table->integer('biaya');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('hari')->nullable();
             $table->string('bulan')->nullable();
             $table->timestamps();

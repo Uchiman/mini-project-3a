@@ -29,6 +29,7 @@ use App\Supplier;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class PimpinanController extends Controller
@@ -247,6 +248,7 @@ class PimpinanController extends Controller
         $pengeluaran = new Pengeluaran();
         $pengeluaran->keterangan = $request->keterangan;
         $pengeluaran->biaya = $request->biaya;
+        $pengeluaran->user_id = Auth::id();
         $pengeluaran->bulan = $bulan;
         $pengeluaran->hari = $hari;
 
@@ -452,7 +454,7 @@ class PimpinanController extends Controller
         ], Response::HTTP_OK);
     }
 
-    // melihat data pengeluaran semua
+    // melihat data kategori semua
     public function semuaKategori()
     {
         $kategori = Kategori::all('id', 'nama');
@@ -465,7 +467,7 @@ class PimpinanController extends Controller
     }
 
 
-    // update data pengeluaran
+    // update data kategori
     public function updateKategori(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [

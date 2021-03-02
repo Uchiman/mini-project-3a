@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">Input Data Barang</h3>
@@ -48,6 +49,9 @@
                             <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
                         @endforeach
                     </select>
+                    @error('kategori_id')
+                        <span class="help-block">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group @error('merek') has-error @enderror">
@@ -85,5 +89,7 @@
             </div>
         </form>
     </div>
+
+
 
 @endsection

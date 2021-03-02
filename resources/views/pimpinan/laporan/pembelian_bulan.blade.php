@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Kategori Barang</h3>
+                        <h3 class="card-title">Laporan Pembelian Per Bulan</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -14,13 +14,26 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Nama Kategori Barang</th>
-                                    <th>Aksi</th>
+                                    <th>Supplier</th>
+                                    <th>Nama Barang</th>
+                                    <th>Jumlah Barang</th>
+                                    <th>Total Bayar</th>
+                                    <th>Tanggal Pembelian</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                @foreach ($pembelians as $pembelian)
+                                    <tr>
+                                        <td>{{ $pembelian->id }}</td>
+                                        <td>{{ $pembelian->supplier }}</td>
+                                        <td>{{ $pembelian->barang }}</td>
+                                        <td>{{ $pembelian->total_barang }}</td>
+                                        <td>{{ $pembelian->total_bayar }}</td>
+                                        <td>{{ $pembelian->hari }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
-                        <a href="{{ route('kategori.create') }}" class="btn btn-info float-right mt-5"> Tambah
-                        </a>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -45,32 +58,16 @@
 @endpush
 
 @push('scripts')
-    <!-- Notify -->
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.notify.min.js') }}"></script>
     @include('templates.partials.alerts')
     <!-- DataTables -->
     @include('templates.datatable.scripts')
+
     <script>
         $(function() {
-            $('#dataTable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('kategori.data') }}',
-                columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false,
-                        responsive: true,
-                        lengthChange: false,
-                        autoWidth: false,
-                    },
-                    {
-                        data: 'nama'
-                    },
-                    {
-                        data: 'action'
-                    }
-                ]
+            $("#dataTable").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false
             });
         });
 

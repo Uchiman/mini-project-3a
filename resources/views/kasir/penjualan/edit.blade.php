@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="col-md-6">
+<div class="col-md-6" style="margin-left: 25%">
     <!-- general form elements -->
-    <div class="card">
+    <div class="card card-warning">
         <div class="card-header">
             <h3 class="card-title">Edit Jumlah Barang</h3>
         </div>
@@ -31,7 +31,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-warning">Submit</button>
             </div>
         </form>
     </div>

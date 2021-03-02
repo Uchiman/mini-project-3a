@@ -51,6 +51,7 @@ class BarangController extends Controller
             'merek' => 'required|string|max:255',
             'stok' => 'required|integer',
             'diskon' => 'required|integer|min:0',
+            'kategori_id' => 'required|not_in:0'
         ]);
 
         $barang = Barang::where('nama', $request->nama)->first();

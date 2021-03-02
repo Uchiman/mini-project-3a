@@ -15,7 +15,7 @@
                 <div class="form-group  @error('nama') has-error @enderror">
                     <label for="nama">Nama Kategori Barang</label>
                     <input type="text" class="form-control" id="nama" name="nama"
-                        placeholder="Masukkan nama toko" value="{{ old('nama') }}">
+                        placeholder="Masukkan kategori barang" value="{{ old('nama') }}">
                     @error('nama')
                         <span class="help-block">{{ $message }}</span>
                     @enderror

@@ -4,21 +4,10 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="card">
+            <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Data Barang</h3>
 
-                    <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-default">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0" style="height: 300px;">
@@ -75,7 +64,7 @@
             <!-- left column -->
             <div class="col-md-6">
                 <!-- general form elements -->
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Input Barang</h3>
                     </div>
@@ -97,7 +86,7 @@
                             <div class="form-group @error('jumlah_barang') has-error @enderror">
                                 <label for="">Jumlah Barang</label>
                                 <input type="number" name="jumlah_barang" class="form-control"
-                                    placeholder="Masukkan jumlah barang" value="{{ old('jumlah_barang') }}">
+                                    placeholder="Masukkan jumlah barang" value="1">
                                 @error('jumlah_barang')
                                     <span class="help-block">{{ $message }}</span>
                                 @enderror
@@ -117,7 +106,7 @@
             <!-- right column -->
             <div class="col-md-6">
                 <!-- Form Element sizes -->
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Input Pembayaran</h3>
                     </div>
