@@ -123,7 +123,19 @@ class DataController extends Controller
         $bulan = LaporanStok::all()->unique('bulan');
 
         return datatables()->of($bulan)
-            ->addColumn('action', 'pimpinan.laporan.action')
+            ->addColumn('action', 'pimpinan.laporan.bulan.action')
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->toJson();
+    }
+
+    // laporan harian
+    public function dataHari()
+    {
+        $hari = LaporanStok::all()->unique('hari');
+
+        return datatables()->of($hari)
+            ->addColumn('action', 'pimpinan.laporan.hari.action')
             ->addIndexColumn()
             ->rawColumns(['action'])
             ->toJson();

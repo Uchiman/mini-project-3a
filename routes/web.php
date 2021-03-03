@@ -23,6 +23,7 @@ Route::get('kasir/member/data', 'DataController@member')->name('member.data');
 Route::get('pimpinan/stok-bulan/data', 'DataController@stokBulan')->name('stokBulan.data');
 Route::get('pimpinan/stok-hari/data', 'DataController@stokHari')->name('stokHari.data');
 Route::get('pimpinan/laporan-bulan/data', 'DataController@dataBulan')->name('dataBulan.data');
+Route::get('pimpinan/laporan-hari/data', 'DataController@dataHari')->name('dataHari.data');
 
 Route::get('/', function () {
     return view('auth.login');
@@ -55,16 +56,16 @@ Route::group(['middleware' => ['role:kasir']], function () {
     Route::post('/kasir2', 'PenjualanController@hasilPenjualan')->name('kasir2.store');
     // member
     Route::resource('kasir/member', 'MemberController');
-    // pengeluaran
-    Route::resource('kasir/pengeluaran', 'PengeluaranController');
 });
 
 
 Route::group(['middleware' => ['role:pimpinan']], function () {
     // home
+    Route::get('/pimpinan', 'HomeController@pimpinan')->name('pimpinan');
     // laporan stok
     Route::get('/pimpinan/stok/bulan', 'LaporanController@stokBulan')->name('pimpinan.stokBulan');
     Route::get('/pimpinan/stok/hari', 'LaporanController@stokHari')->name('pimpinan.stokHari');
+    // laporan bulan
     Route::get('/pimpinan/laporan/bulan', 'LaporanController@dataBulan')->name('pimpinan.dataBulan');
     Route::get('/pimpinan/laporan/bulan/{bulan}', 'LaporanController@detailBulan')->name('pimpinan.detailBulan');
     Route::get('/pimpinan/laporan/bulan/pembelian/{bulan}', 'LaporanController@pembelianBulan')->name('pimpinan.pembelianBulan');
@@ -72,4 +73,7 @@ Route::group(['middleware' => ['role:pimpinan']], function () {
     Route::get('/pimpinan/laporan/bulan/penjualan/detail/{id}', 'LaporanController@detailPenjualan')->name('pimpinan.detailPenjualan');
     Route::get('/pimpinan/laporan/bulan/pengeluaran/{bulan}', 'LaporanController@pengeluaranBulan')->name('pimpinan.pengeluaranBulan');
     Route::get('/pimpinan/laporan/bulan/absensi/{bulan}', 'LaporanController@absensiBulan')->name('pimpinan.absensiBulan');
+    // laporan hari
+    Route::get('/pimpinan/laporan/hari', 'LaporanController@dataHari')->name('pimpinan.dataHari');
+    Route::get('/pimpinan/laporan/hari/{hari}', 'LaporanController@detailHari')->name('pimpinan.detailHari');
 });

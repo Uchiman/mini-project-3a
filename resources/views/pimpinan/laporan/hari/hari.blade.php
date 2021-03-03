@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Kategori Barang</h3>
+                        <h3 class="card-title">Laporan Per Hari</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -14,15 +14,11 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Keterangan</th>
-                                    <th>Biaya</th>
                                     <th>Tanggal</th>
-                                    <th>Aksi</th>
+                                    <th>Detail</th>
                                 </tr>
                             </thead>
                         </table>
-                        <a href="{{ route('pengeluaran.create') }}" class="btn btn-info float-right mt-5"> Tambah
-                        </a>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -47,18 +43,16 @@
 @endpush
 
 @push('scripts')
-    <!-- Notify -->
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.notify.min.js') }}"></script>
     @include('templates.partials.alerts')
     <!-- DataTables -->
     @include('templates.datatable.scripts')
-
+    
     <script>
         $(function() {
             $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('pengeluaran.data') }}',
+                ajax: '{{ route('dataHari.data') }}',
                 columns: [{
                         data: 'DT_RowIndex',
                         orderable: false,
@@ -66,12 +60,6 @@
                         responsive: true,
                         lengthChange: false,
                         autoWidth: false,
-                    },
-                    {
-                        data: 'keterangan'
-                    },
-                    {
-                        data: 'biaya'
                     },
                     {
                         data: 'hari'

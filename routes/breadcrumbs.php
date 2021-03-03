@@ -166,3 +166,40 @@ Breadcrumbs::for('member.edit', function ($trail, $barang) {
     $trail->push('Member', route('member.index'));
     $trail->push('Edit Member', route('member.edit', $barang));
 });
+
+/*
+|--------------------------------------------------------------------------
+| PIMPINAN
+|--------------------------------------------------------------------------
+*/
+
+// Home
+Breadcrumbs::for('pimpinan', function ($trail) {
+    $trail->push('Home', route('pimpinan'));
+});
+
+// Index Laporan Bulanan
+Breadcrumbs::for('pimpinan.dataBulan', function ($trail) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Data Bulan', route('pimpinan.dataBulan'));
+});
+
+// Detail Laporan Bulanan
+Breadcrumbs::for('pimpinan.detailBulan', function ($trail, $data) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Data Bulan', route('pimpinan.dataBulan'));
+    $trail->push('Laporan Bulanan', route('pimpinan.detailBulan', $data));
+});
+
+// Index Laporan Harian
+Breadcrumbs::for('pimpinan.dataHari', function ($trail) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Data Hari', route('pimpinan.dataHari'));
+});
+
+// Detail Laporan Harian
+Breadcrumbs::for('pimpinan.detailHari', function ($trail, $data) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Data Hari', route('pimpinan.dataHari'));
+    $trail->push('Laporan Harian', route('pimpinan.detailHari', $data));
+});

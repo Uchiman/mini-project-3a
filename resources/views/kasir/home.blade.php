@@ -46,22 +46,6 @@
                     <div class="inner">
                         <h3> 5 </h3>
 
-                        <p>Pengeluaran</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-cube"></i>
-                    </div>
-                    <a href="/kasir/pengeluaran" class="small-box-footer">More info <i
-                            class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3> 5 </h3>
-
                         <p>Kategori</p>
                     </div>
                     <div class="icon">
@@ -166,7 +150,7 @@
                                     <input type="checkbox" value="" name="todo5" id="todoCheck5">
                                     <label for="todoCheck5"></label>
                                 </div>
-                                <span class="text">Input data pengeluaran</span>
+                                <span class="text">Laporan data pengeluaran kepada staff</span>
                                 <div class="tools">
                                     <i class="fas fa-edit"></i>
                                     <i class="fas fa-trash-o"></i>

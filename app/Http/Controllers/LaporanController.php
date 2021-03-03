@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Absen;
+use App\Barang;
 use App\DetailPenjualan;
 use App\KodeAbsen;
 use App\LabaRugi;
@@ -33,7 +34,7 @@ class LaporanController extends Controller
     public function dataBulan()
     {
         $user = Auth::user();
-        return view('pimpinan.laporan.bulan', compact('user'));
+        return view('pimpinan.laporan.bulan.bulan', compact('user'));
     }
 
     // data detail bulan
@@ -64,7 +65,7 @@ class LaporanController extends Controller
             'labaRugi' => $labaRugi,
         ];
 
-        return view('pimpinan.laporan.detail_bulan', compact('user', 'data', 'namaBulan'));
+        return view('pimpinan.laporan.bulan.detail', compact('user', 'data', 'namaBulan'));
     }
 
     // pembelian per bulan
@@ -72,7 +73,7 @@ class LaporanController extends Controller
     {
         $user = Auth::user();
         $pembelians = Pembelian::where('bulan', $bulan)->get();
-        return view('pimpinan.laporan.pembelian_bulan', compact('user', 'pembelians'));
+        return view('pimpinan.laporan.bulan.pembelian', compact('user', 'pembelians'));
     }
 
     // pengeluaran per bulan
@@ -80,7 +81,7 @@ class LaporanController extends Controller
     {
         $user = Auth::user();
         $pengeluarans = Pengeluaran::where('bulan', $bulan)->get();
-        return view('pimpinan.laporan.pengeluaran_bulan', compact('user', 'pengeluarans'));
+        return view('pimpinan.laporan.bulan.pengeluaran', compact('user', 'pengeluarans'));
     }
 
     // absensi per bulan
@@ -101,7 +102,7 @@ class LaporanController extends Controller
                 $absen[$vals['user_id']]  = $absen;
             }
         }
-        return view('pimpinan.laporan.absensi_bulan', compact('user', 'absensi', 'totalAbsen'));
+        return view('pimpinan.laporan.bulan.absensi', compact('user', 'absensi', 'totalAbsen'));
     }
 
 
@@ -111,7 +112,7 @@ class LaporanController extends Controller
         $user = Auth::user();
         $penjualans = Penjualan::where('bulan', $bulan)->with('kasir')->get();
 
-        return view('pimpinan.laporan.penjualan_bulan', compact('user', 'penjualans'));
+        return view('pimpinan.laporan.bulan.penjualan', compact('user', 'penjualans'));
     }
 
     // pembelian per bulan
@@ -122,6 +123,45 @@ class LaporanController extends Controller
         $detail_penjualans = DetailPenjualan::where('penjualan_id', $id)->get();
         $kasir = User::where('id', $penjualan->kasir_id)->first();
 
-        return view('pimpinan.laporan.detail_penjualan', compact('user', 'detail_penjualans', 'penjualan', 'kasir'));
+        return view('pimpinan.laporan.bulan.detail_penjualan', compact('user', 'detail_penjualans', 'penjualan', 'kasir'));
+    }
+
+    // data hari
+    public function dataHari()
+    {
+        $user = Auth::user();
+        return view('pimpinan.laporan.hari.hari', compact('user'));
+    }
+
+    // data detail hari
+    public function detailHari($hari)
+    {
+        $user = Auth::user();
+
+        
+        $namaHari = LabaRugi::where('hari', $hari)->first();
+        $labaRugi = LabaRugi::where('hari', $hari)->first();
+
+        $jumlah_barang = DetailPenjualan::whereDate('created_at', $hari)->sum('jumlah_barang');
+        $pendapatan = $labaRugi->total_pemasukan;
+        $detail_barang = DetailPenjualan::whereDate('created_at', $hari)->get();
+        
+        foreach ($detail_barang as $barang) {
+            $barangDB = Barang::where('id', $barang->barang_id)->first();
+            $keuntunganarr[] = $barang->jumlah_barang * ($barangDB->harga_jual - $barangDB->harga_beli);
+            $keuntungan = array_sum($keuntunganarr);
+            if ($keuntunganarr) {
+                $keuntungan = array_sum($keuntunganarr);
+            } else {
+                $keuntungan  = 0;
+            }
+        }
+        $data = [];
+        $data = [
+            'jumlah_penjualan'  => $jumlah_barang,
+            'pendapatan'        => number_format($pendapatan, 0, ',', '.'),
+            'keuntungan'        => number_format($keuntungan, 0, ',', '.'),
+        ];
+        return view('pimpinan.laporan.hari.detail', compact('user', 'data', 'namaHari'));
     }
 }

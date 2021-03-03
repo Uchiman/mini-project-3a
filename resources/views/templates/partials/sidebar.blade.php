@@ -126,15 +126,6 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/kasir/pengeluaran" class="nav-link">
-                            <i class="nav-icon fas fa-money-bill"></i>
-                            <p>
-                                Pengeluaran
-                                <span class="badge badge-info right"></span>
-                            </p>
-                        </a>
-                    </li>
                     @endrole
 
                     {{-- DASHBOARD PIMPINAN --}}
@@ -193,6 +184,15 @@
                                     <i class="nav-icon fas fa-chart-bar"></i>
                                     <p>
                                         Laporan Bulanan
+                                        <span class="badge badge-info right"></span>
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/pimpinan/laporan/hari" class="nav-link">
+                                    <i class="nav-icon fas fa-chart-bar"></i>
+                                    <p>
+                                        Laporan Harian
                                         <span class="badge badge-info right"></span>
                                     </p>
                                 </a>
