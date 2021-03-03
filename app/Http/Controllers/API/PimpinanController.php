@@ -34,11 +34,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PimpinanController extends Controller
 {
-    /**
-     * LAPORAN DATA STOK BARANG
-     *
-     * @return void
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | LAPORAN DATA STOK BARANG
+    |--------------------------------------------------------------------------
+    */
 
     // laporan stok barang per bulan
     public function stokBarangPerBulan($bulan)
@@ -66,62 +66,11 @@ class PimpinanController extends Controller
         return response()->json(new LaporanStokCollection($res), Response::HTTP_OK);
     }
 
-    /**
-     * LAPORAN DATA PEMBELIAN BARANG
-     *
-     * @return void
-     */
-
-    // laporan data pembelian per bulan
-    public function dataPembelianPerBulan($bulan)
-    {
-        $pembelian = Pembelian::where('bulan', $bulan)->get();
-        if ($pembelian == "[]") {
-            return Response()->json([
-                "status" => "failed",
-                "message" => "data tidak ditemukan",
-            ], 400);
-        }
-        return response()->json(new PembelianCollection($pembelian), Response::HTTP_OK);
-    }
-
-    /**
-     * LAPORAN DATA PENJUALAN BARANG
-     * @return void
-     */
-
-    // laporan data penjualan per bulan
-    public function dataPenjualanPerBulan($bulan)
-    {
-        $penjualan = Penjualan::where('bulan', $bulan)->get();
-        if ($penjualan == "[]") {
-            return Response()->json([
-                "status" => "failed",
-                "message" => "data tidak ditemukan",
-            ], 400);
-        }
-        return response()->json(new PenjualanCollection($penjualan), Response::HTTP_OK);
-    }
-
-    //laporan detail penjualan barang
-    public function detailPenjualan($id)
-    {
-        $penjualan = Penjualan::where('id', $id)->first();
-        if (!$penjualan) {
-            return Response()->json([
-                "status" => "failed",
-                "message" => "data tidak ditemukan",
-            ], 400);
-        }
-        $detailPenjualan = DetailPenjualan::where('penjualan_id', $penjualan->id)->get();
-
-        return response()->json(new DetailPenjualanCollection($detailPenjualan), Response::HTTP_OK);
-    }
-
-    /**
-     * LAPORAN PIMPINAN TRANSAKSI PEMBELIAN, PENJUALAN DAN LABA RUGI
-     * @return void
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | LAPORAN BULANAN
+    |--------------------------------------------------------------------------
+    */
 
     // mengambil data bulan
     public function dataBulan()
@@ -136,19 +85,6 @@ class PimpinanController extends Controller
         return response()->json(new BulanCollection($bulan), Response::HTTP_OK);
     }
 
-    // mengambil data tanggal
-    public function dataHari($bulan)
-    {
-        $hari = LaporanStok::where('bulan', $bulan)->get()->unique('hari');
-        if ($hari == "[]") {
-            return Response()->json([
-                "status" => "failed",
-                "message" => "data tidak ditemukan",
-            ], 400);
-        }
-        return response()->json(new HariCollection($hari), Response::HTTP_OK);
-    }
-
     // laporan pembelian, penjualan dan laba rugi
     public function laporanPimpinan($bulan)
     {
@@ -161,9 +97,11 @@ class PimpinanController extends Controller
                 "message" => "belum ada data yang masuk",
             ], 400);
         }
+
         $pemasukan = LabaRugi::where('bulan', $bulan)->get()->sum('total_pemasukan');
         $pengeluaran = LabaRugi::where('bulan', $bulan)->get()->sum('total_pengeluaran');
         $labaRugi = LabaRugi::where('bulan', $bulan)->get()->sum('hasil');
+
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'data berhasil ditampilkan',
@@ -177,6 +115,66 @@ class PimpinanController extends Controller
                 "nama" => $namaBulan->created_at->format('F-Y'),
             ],
         ], Response::HTTP_OK);
+    }
+
+    // laporan data pembelian per bulan
+    public function dataPembelianPerBulan($bulan)
+    {
+        $pembelian = Pembelian::where('bulan', $bulan)->get();
+        if ($pembelian == "[]") {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+        return response()->json(new PembelianCollection($pembelian), Response::HTTP_OK);
+    }
+
+    // laporan data penjualan per bulan
+    public function dataPenjualanPerBulan($bulan)
+    {
+        $penjualan = Penjualan::where('bulan', $bulan)->get();
+        if ($penjualan == "[]") {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+        return response()->json(new PenjualanCollection($penjualan), Response::HTTP_OK);
+    }
+
+    // laporan detail penjualan per bulan
+    public function detailPenjualan($id)
+    {
+        $penjualan = Penjualan::where('id', $id)->first();
+        if (!$penjualan) {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+        $detailPenjualan = DetailPenjualan::where('penjualan_id', $penjualan->id)->get();
+
+        return response()->json(new DetailPenjualanCollection($detailPenjualan), Response::HTTP_OK);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | LAPORAN HARIAN
+    |--------------------------------------------------------------------------
+    */
+
+    // mengambil data tanggal
+    public function dataHari($bulan)
+    {
+        $hari = LaporanStok::where('bulan', $bulan)->get()->unique('hari');
+        if ($hari == "[]") {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+        return response()->json(new HariCollection($hari), Response::HTTP_OK);
     }
 
     // laporan laba rugi per hari
@@ -197,9 +195,9 @@ class PimpinanController extends Controller
                 "message" => "data tidak ditemukan",
             ], 400);
         }
+
         $pendapatan = $labaRugi->total_pemasukan;
         $detail_barang = DetailPenjualan::whereDate('created_at', $hari)->get();
-        
         foreach ($detail_barang as $barang) {
             $barangDB = Barang::where('id', $barang->barang_id)->first();
             $keuntunganarr[] = $barang->jumlah_barang * ($barangDB->harga_jual - $barangDB->harga_beli);
@@ -210,6 +208,7 @@ class PimpinanController extends Controller
                 $keuntungan  = 0;
             }
         }
+
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'data berhasil ditampilkan',
@@ -221,10 +220,11 @@ class PimpinanController extends Controller
         ]);
     }
 
-    /**
-     * PENGELUARAN
-     * @return void
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | DATA PENGELUARAN
+    |--------------------------------------------------------------------------
+    */
 
     // input pengeluaran 
     public function inputPengeluaran(Request $request)
@@ -315,7 +315,25 @@ class PimpinanController extends Controller
         $pengeluaran->bulan = $bulan;
         $pengeluaran->hari = $hari;
 
-        $pengeluaran->save();
+        // masukkan ke database laba_rugi
+        $labaRugi = LabaRugi::where('hari', $hari)->first();
+        if (!$labaRugi) {
+            $labaRugi = new LabaRugi();
+            $labaRugi->total_pemasukan = 0;
+            $labaRugi->created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
+            $labaRugi->total_pengeluaran = $pengeluaran->biaya - $pengeluaran->biaya;
+            $labaRugi->hasil = $pengeluaran->biaya - $pengeluaran->biaya;
+            $labaRugi->hari = $hari;
+            $labaRugi->bulan = $bulan;
+            $labaRugi->save();
+        }
+
+        $pengeluaranDB = Pengeluaran::where('id', $id)->first();
+        $labaRugi->total_pengeluaran = $labaRugi->total_pengeluaran - $pengeluaranDB->biaya + $pengeluaran->biaya;
+        $labaRugi->hasil = $labaRugi->hasil - $pengeluaran->biaya + $pengeluaranDB->biaya;
+
+        $pengeluaran->update();
+        $labaRugi->save();
 
         return response()->json([
             'status'    =>  'success',
@@ -328,6 +346,12 @@ class PimpinanController extends Controller
     public function deletePengeluaran($id)
     {
         $pengeluaran = Pengeluaran::where('id', $id)->first();
+        $hari = $pengeluaran->hari;
+        $labaRugi = LabaRugi::where('hari', $hari)->first();
+        $labaRugi->total_pengeluaran = $labaRugi->total_pengeluaran - $pengeluaran->biaya;
+        $labaRugi->hasil = $labaRugi->hasil + $pengeluaran->biaya;
+
+        $labaRugi->save();
         $pengeluaran->delete();
 
         return response()->json([

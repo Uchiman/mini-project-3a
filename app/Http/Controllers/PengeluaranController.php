@@ -123,7 +123,6 @@ class PengeluaranController extends Controller
         $pengeluaran->hari = $hari;
         $pengeluaran->bulan = $bulan;
 
-
         // masukkan ke database laba_rugi
         $labaRugi = LabaRugi::where('hari', $hari)->first();
         if (!$labaRugi) {
@@ -158,7 +157,6 @@ class PengeluaranController extends Controller
         $pengeluaran = Pengeluaran::find($id);
         $hari = $pengeluaran->hari;
         $labaRugi = LabaRugi::where('hari', $hari)->first();
-
         $labaRugi->total_pengeluaran = $labaRugi->total_pengeluaran - $pengeluaran->biaya;
         $labaRugi->hasil = $labaRugi->hasil + $pengeluaran->biaya;
 

@@ -25,6 +25,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class KasirController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | DATA TRANSAKSI PENJUALAN
+    |--------------------------------------------------------------------------
+    */
+
     // kasir post penjualan per barang
     public function detailPenjualan(Request $request)
     {
@@ -65,6 +71,7 @@ class KasirController extends Controller
             $detailPenjualan->harga_jual = $barang->harga_jual * $request->jumlah_barang;
             $detailPenjualan->diskon = $barang->diskon;
             $detailPenjualan->created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
+
             $detailPenjualan->save();
 
             return response()->json([
@@ -73,11 +80,14 @@ class KasirController extends Controller
                 "data"      =>  [new DetailPenjualanResource($detailPenjualan)],
             ], Response::HTTP_OK);
         }
+
         $detailPenjualan->jumlah_barang = $request->jumlah_barang + $detailPenjualan->jumlah_barang;
         $detailPenjualan->harga_jual = $barang->harga_jual * $detailPenjualan->jumlah_barang;
+
         $detailPenjualan->save();
 
         $dataPenjualan = DetailPenjualan::where('penjualan_id', $penjualan->id)->get();
+
         return response()->json(new DetailPenjualanCollection($dataPenjualan), Response::HTTP_OK);
     }
 
@@ -88,7 +98,6 @@ class KasirController extends Controller
         $validator = Validator::make($request->all(), [
             'dibayar'           =>  'required|numeric|min:0',
         ]);
-
         if ($validator->fails()) {
             return response()->json([
                 'status'    =>  "failed",
@@ -97,7 +106,6 @@ class KasirController extends Controller
         }
 
         $penjualan = Penjualan::where('status', '0')->first();
-        // dd($penjualan);
         if (!$penjualan) {
             return Response()->json([
                 "status" => "failed",
@@ -132,6 +140,7 @@ class KasirController extends Controller
             $stokBarang->sisa           = $stokBarang->sisa - $barang->jumlah_barang;
             $stokBarang->hari           = $hari;
             $stokBarang->bulan          = $bulan;
+
             $stokBarang->save();
         }
 
@@ -145,7 +154,9 @@ class KasirController extends Controller
                     "message" => "member tidak ditemukan",
                 ], 400);
             }
+
             $detailPenjualan = DetailPenjualan::where('penjualan_id', $penjualan->id)->get();
+
             foreach ($detailPenjualan as $barang) {
                 $barang->harga_jual = $barang->harga_jual - ($barang->harga_jual * $barang->diskon / 100);
 
@@ -165,6 +176,7 @@ class KasirController extends Controller
                 "message" => "uang tidak cukup",
             ], 400);
         }
+
         $penjualan->created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
         $hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
         $bulan = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
@@ -184,10 +196,12 @@ class KasirController extends Controller
             $labaRugi->hasil = $penjualan->total_bayar - $penjualan->total_bayar;
             $labaRugi->hari = $hari;
             $labaRugi->bulan = $bulan;
+
             $labaRugi->save();
         }
         $labaRugi->total_pemasukan = $labaRugi->total_pemasukan + $penjualan->total_bayar;
         $labaRugi->hasil = $labaRugi->hasil + $penjualan->total_bayar;
+
         $labaRugi->save();
 
         return response()->json([
@@ -207,8 +221,10 @@ class KasirController extends Controller
                 "message" => "data tidak ditemukan",
             ], 400);
         }
+
         $dataTerakhir = DetailPenjualan::where('penjualan_id', $dataPenjualan->id)->first();
         $dataPenjualan = DetailPenjualan::where('penjualan_id', $dataTerakhir->penjualan_id)->get();
+
         return response()->json(new DetailPenjualanCollection($dataPenjualan), Response::HTTP_OK);
     }
 
@@ -258,6 +274,7 @@ class KasirController extends Controller
         // update database detail penjualan
         $detailPenjualan->jumlah_barang = $request->jumlah_barang;
         $detailPenjualan->harga_jual = $barang->harga_jual * $request->jumlah_barang;
+
         $detailPenjualan->save();
 
         return response()->json([
@@ -292,6 +309,12 @@ class KasirController extends Controller
         ], Response::HTTP_OK);
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | ABSENSI KASIR
+    |--------------------------------------------------------------------------
+    */
+
     // absen harian
     public function absen(Request $request)
     {
@@ -304,6 +327,7 @@ class KasirController extends Controller
                 "message" => "absen belum dibuka",
             ], 400);
         }
+
         $absen = Absen::whereDate('created_at', $hari_ini)->where('user_id', $user_id)->first();
         if ($absen) {
             return Response()->json([
@@ -311,6 +335,7 @@ class KasirController extends Controller
                 "message" => "sudah absen hari ini",
             ], 400);
         }
+
         $absen = Absen::where('user_id', $user_id)->where('absen', 0)->first();
         $absen->kode_id = $request->kode;
         if ($request->kode != $kode->kode) {
@@ -319,10 +344,12 @@ class KasirController extends Controller
                 "message" => "kode salah",
             ], 400);
         }
+
         $absen->user_id = $user_id;
         $absen->created_at = $hari_ini;
         $absen->kode_id = $kode->id;
         $absen->absen = true;
+
         $absen->save();
 
         return response()->json([
@@ -349,7 +376,9 @@ class KasirController extends Controller
                 'data'      => 0,
             ], Response::HTTP_OK);
         }
+
         $hasil = $totalAbsen * 100 / $absenUser;
+        
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'persentase absensi bulan ini',

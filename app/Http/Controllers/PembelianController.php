@@ -136,9 +136,6 @@ class PembelianController extends Controller
         $pembelian->total_bayar         = $request->total_bayar;
         $pembelian->hari                = $request->hari;
 
-        
-
-
         $hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
         $bulan = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
         // masukkan ke database laba_rugi

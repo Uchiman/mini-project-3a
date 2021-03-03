@@ -20,6 +20,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StaffController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | DATA BARANG
+    |--------------------------------------------------------------------------
+    */
+
     // input data barang
     public function inputBarang(Request $request)
     {
@@ -85,6 +91,7 @@ class StaffController extends Controller
             $stokBarang->sisa = $barang->stok;
             $stokBarang->hari =  $hari;
             $stokBarang->bulan =  $bulan;
+
             $stokBarang->save();
         }
         $stokBarang->barang_id = $barang->id;
@@ -92,73 +99,13 @@ class StaffController extends Controller
         $stokBarang->sisa = $barang->stok;
         $stokBarang->hari =  $hari;
         $stokBarang->bulan =  $bulan;
+
         $stokBarang->save();
 
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'berhasil input barang',
             "data"      =>  $barang,
-        ], Response::HTTP_OK);
-    }
-
-    // input transaksi pembelian
-    public function pembelianBarang(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'supplier'     =>  'required',
-            'barang'     =>  'required',
-            'total_barang'     =>  'required|numeric|min:0',
-            'total_bayar'     =>  'required|numeric',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status'    =>  "failed",
-                'message'   =>  $validator->errors()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        // masukkan ke database pembelian
-        $pembelian = new Pembelian();
-        // jika supplier tidak ditemukan
-        $supplier = Supplier::where('nama', $request->supplier)->first();
-        // dd($supplier);
-        if (!$supplier) {
-            $supplier = new Supplier();
-            $supplier->nama = $request->supplier;
-            $supplier->save();
-        }
-        $pembelian->supplier            = $request->supplier;
-        $pembelian->barang              = $request->barang;
-        $pembelian->total_barang        = $request->total_barang;
-        $pembelian->total_bayar         = $request->total_bayar;
-        $pembelian->hari                = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
-        $pembelian->bulan               = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
-
-        $pembelian->save();
-
-        $hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
-        $bulan = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
-        // masukkan ke database laba_rugi
-        $labaRugi = LabaRugi::where('hari', $hari)->first();
-        if (!$labaRugi) {
-            $labaRugi = new LabaRugi();
-            $labaRugi->total_pemasukan = 0;
-            $labaRugi->created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
-            $labaRugi->total_pengeluaran = $pembelian->total_bayar - $pembelian->total_bayar;
-            $labaRugi->hasil = $pembelian->total_bayar - $pembelian->total_bayar;
-            $labaRugi->hari = $hari;
-            $labaRugi->bulan = $bulan;
-            $labaRugi->save();
-        }
-        $labaRugi->total_pengeluaran = $labaRugi->total_pengeluaran + $pembelian->total_bayar;
-        $labaRugi->hasil = $labaRugi->hasil - $pembelian->total_bayar;
-        $labaRugi->save();
-
-        return response()->json([
-            'status'    =>  'success',
-            'message'   =>  'berhasil Input Barang',
-            "data"      =>  $pembelian,
         ], Response::HTTP_OK);
     }
 
@@ -173,71 +120,6 @@ class StaffController extends Controller
             ], 400);
         }
         return response()->json(new BarangCollection($barang), Response::HTTP_OK);
-    }
-
-    // melihat data transaksi
-    public function dataPembelian()
-    {
-        $pembelian = Pembelian::all();
-        if ($pembelian == "[]") {
-            return Response()->json([
-                "status" => "failed",
-                "message" => "data tidak ditemukan",
-            ], 400);
-        }
-        return response()->json(new PembelianCollection($pembelian), Response::HTTP_OK);
-    }
-
-    // melihat kategori barang
-    public function kategoriBarang()
-    {
-        $kategori = Kategori::all();
-        if ($kategori == "[]") {
-            return Response()->json([
-                "status" => "failed",
-                "message" => "data tidak ditemukan",
-            ], 400);
-        }
-        return response()->json(new KategoriCollection($kategori), Response::HTTP_OK);
-    }
-
-    // melihat data barang per kategori
-    public function barangPerKategori($id)
-    {
-        $barang = Barang::where('kategori_id', $id)->get();
-        if ($barang == "[]") {
-            return Response()->json([
-                "status" => "failed",
-                "message" => "data tidak ditemukan",
-            ], 400);
-        }
-        return response()->json(new BarangCollection($barang), Response::HTTP_OK);
-    }
-
-    // melihat tanggal pembelian barang(berbentuk kode)
-    public function tanggalPembelian()
-    {
-        $tanggalPembelian = Pembelian::all()->unique('bulan');
-        if ($tanggalPembelian == "[]") {
-            return Response()->json([
-                "status" => "failed",
-                "message" => "data tidak ditemukan",
-            ], 400);
-        }
-        return response()->json(new TanggalPembelianCollection($tanggalPembelian), Response::HTTP_OK);
-    }
-
-    // melihat data pembelian per tanggal
-    public function pembelianPerTanggal($id)
-    {
-        $pembelian = Pembelian::where('hari', $id)->get();
-        if ($pembelian == "[]") {
-            return Response()->json([
-                "status" => "failed",
-                "message" => "data tidak ditemukan",
-            ], 400);
-        }
-        return response()->json(new PembelianCollection($pembelian), Response::HTTP_OK);
     }
 
     // update data barang
@@ -289,6 +171,7 @@ class StaffController extends Controller
             $stokBarang->sisa = $barang->stok;
             $stokBarang->hari =  $hari;
             $stokBarang->bulan =  $bulan;
+
             $stokBarang->save();
         }
         $stokBarang->barang_id = $barang->id;
@@ -296,8 +179,9 @@ class StaffController extends Controller
         $stokBarang->sisa = $barang->stok;
         $stokBarang->hari =  $hari;
         $stokBarang->bulan =  $bulan;
+
         $stokBarang->save();
-        
+
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'berhasil update barang',
@@ -309,12 +193,103 @@ class StaffController extends Controller
     public function deleteBarang($id)
     {
         $barang = Barang::where('id', $id)->first();
+
+        $stokBarang = LaporanStok::where('barang_id', $id)->get();
+        foreach ($stokBarang as $stok) {
+            $stok->delete();
+        }
+
         $barang->delete();
+
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'berhasil hapus barang',
             "data"      =>  $barang,
         ], Response::HTTP_OK);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DATA TRANSAKSI PEMBELIAN
+    |--------------------------------------------------------------------------
+    */
+
+    // input transaksi pembelian
+    public function pembelianBarang(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'supplier'     =>  'required',
+            'barang'     =>  'required',
+            'total_barang'     =>  'required|numeric|min:0',
+            'total_bayar'     =>  'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    =>  "failed",
+                'message'   =>  $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        // masukkan ke database pembelian
+        $pembelian = new Pembelian();
+        // jika supplier tidak ditemukan
+        $supplier = Supplier::where('nama', $request->supplier)->first();
+        // dd($supplier);
+        if (!$supplier) {
+            $supplier = new Supplier();
+            $supplier->nama = $request->supplier;
+            $supplier->save();
+        }
+
+        $pembelian->supplier            = $request->supplier;
+        $pembelian->barang              = $request->barang;
+        $pembelian->total_barang        = $request->total_barang;
+        $pembelian->total_bayar         = $request->total_bayar;
+        $pembelian->hari                = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
+        $pembelian->bulan               = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
+
+        $pembelian->save();
+
+        $hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
+        $bulan = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
+        // masukkan ke database laba_rugi
+        $labaRugi = LabaRugi::where('hari', $hari)->first();
+        if (!$labaRugi) {
+            $labaRugi = new LabaRugi();
+            $labaRugi->total_pemasukan = 0;
+            $labaRugi->created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
+            $labaRugi->total_pengeluaran = $pembelian->total_bayar - $pembelian->total_bayar;
+            $labaRugi->hasil = $pembelian->total_bayar - $pembelian->total_bayar;
+            $labaRugi->hari = $hari;
+            $labaRugi->bulan = $bulan;
+            $labaRugi->save();
+        }
+        $labaRugi->total_pengeluaran = $labaRugi->total_pengeluaran + $pembelian->total_bayar;
+        $labaRugi->hasil = $labaRugi->hasil - $pembelian->total_bayar;
+
+        $labaRugi->save();
+
+        return response()->json([
+            'status'    =>  'success',
+            'message'   =>  'berhasil Input Barang',
+            "data"      =>  $pembelian,
+        ], Response::HTTP_OK);
+    }
+
+    // melihat data transaksi pembelian
+    public function dataPembelian()
+    {
+        $pembelian = Pembelian::all();
+        if ($pembelian == "[]") {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+
+        return response()->json(new PembelianCollection($pembelian), Response::HTTP_OK);
     }
 
     // update data pembelian
@@ -340,7 +315,27 @@ class StaffController extends Controller
         $pembelian->total_barang        = $request->total_barang;
         $pembelian->total_bayar         = $request->total_bayar;
 
+        $hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
+        $bulan = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
+        // masukkan ke database laba_rugi
+        $labaRugi = LabaRugi::where('hari', $hari)->first();
+        if (!$labaRugi) {
+            $labaRugi = new LabaRugi();
+            $labaRugi->total_pemasukan = 0;
+            $labaRugi->created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
+            $labaRugi->total_pengeluaran = $pembelian->total_bayar - $pembelian->total_bayar;
+            $labaRugi->hasil = $pembelian->total_bayar - $pembelian->total_bayar;
+            $labaRugi->hari = $hari;
+            $labaRugi->bulan = $bulan;
+            $labaRugi->save();
+        }
+
+        $pembelianDB = Pembelian::where('id', $id)->first();
+        $labaRugi->total_pengeluaran = $labaRugi->total_pengeluaran - $pembelianDB->total_bayar + $pembelian->total_bayar;
+        $labaRugi->hasil = $labaRugi->hasil - $pembelian->total_bayar + $pembelianDB->total_bayar;
+
         $pembelian->update();
+        $labaRugi->save();
 
         return response()->json([
             'status'    =>  'success',
@@ -353,11 +348,78 @@ class StaffController extends Controller
     public function deletePembelian($id)
     {
         $pembelian = Pembelian::where('id', $id)->first();
+        $hari = $pembelian->hari;
+        $labaRugi = LabaRugi::where('hari', $hari)->first();
+
+        $labaRugi->total_pengeluaran = $labaRugi->total_pengeluaran - $pembelian->total_bayar;
+        $labaRugi->hasil = $labaRugi->hasil + $pembelian->total_bayar;
+
+        $labaRugi->save();
         $pembelian->delete();
+
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'berhasil hapus barang',
             "data"      =>  $pembelian,
         ], Response::HTTP_OK);
+    }
+
+
+    // LAIN-LAIN //
+
+    // melihat kategori barang
+    public function kategoriBarang()
+    {
+        $kategori = Kategori::all();
+        if ($kategori == "[]") {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+
+        return response()->json(new KategoriCollection($kategori), Response::HTTP_OK);
+    }
+
+    // melihat data barang per kategori
+    public function barangPerKategori($id)
+    {
+        $barang = Barang::where('kategori_id', $id)->get();
+        if ($barang == "[]") {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+
+        return response()->json(new BarangCollection($barang), Response::HTTP_OK);
+    }
+
+    // melihat tanggal pembelian barang(berbentuk kode)
+    public function tanggalPembelian()
+    {
+        $tanggalPembelian = Pembelian::all()->unique('bulan');
+        if ($tanggalPembelian == "[]") {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+
+        return response()->json(new TanggalPembelianCollection($tanggalPembelian), Response::HTTP_OK);
+    }
+
+    // melihat data pembelian per tanggal
+    public function pembelianPerTanggal($id)
+    {
+        $pembelian = Pembelian::where('hari', $id)->get();
+        if ($pembelian == "[]") {
+            return Response()->json([
+                "status" => "failed",
+                "message" => "data tidak ditemukan",
+            ], 400);
+        }
+
+        return response()->json(new PembelianCollection($pembelian), Response::HTTP_OK);
     }
 }
