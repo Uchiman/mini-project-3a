@@ -2,7 +2,7 @@
 
 // Home
 Breadcrumbs::for('home', function ($trail) {
-    $trail->push('Home', route('home'));
+    $trail->push('Welcome', route('home'));
 });
 
 /*
@@ -202,4 +202,16 @@ Breadcrumbs::for('pimpinan.detailHari', function ($trail, $data) {
     $trail->push('Home', route('pimpinan'));
     $trail->push('Data Hari', route('pimpinan.dataHari'));
     $trail->push('Laporan Harian', route('pimpinan.detailHari', $data));
+});
+
+// Laporan Stok Harian
+Breadcrumbs::for('pimpinan.stokHari', function ($trail) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Laporan Harian', route('pimpinan.stokHari'));
+});
+
+// Laporan Stok Harian
+Breadcrumbs::for('pimpinan.stokBulan', function ($trail) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Laporan Harian', route('pimpinan.stokBulan'));
 });

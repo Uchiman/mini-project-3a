@@ -46,8 +46,8 @@ class LaporanController extends Controller
         $penjualan = Penjualan::where('bulan', $bulan)->get()->count();
         $pengeluaran2 = Pengeluaran::where('bulan', $bulan)->get()->count();
         $namaBulan = LabaRugi::where('bulan', $bulan)->first();
-        $kasir = User::role('kasir')->get()->count();  
-        $karyawan = User::role(['kasir', 'staff'])->get()->count();  
+        $kasir = User::role('kasir')->get()->count();
+        $karyawan = User::role(['kasir', 'staff'])->get()->count();
 
         $pemasukan = LabaRugi::where('bulan', $bulan)->get()->sum('total_pemasukan');
         $pengeluaran = LabaRugi::where('bulan', $bulan)->get()->sum('total_pengeluaran');
@@ -138,25 +138,30 @@ class LaporanController extends Controller
     {
         $user = Auth::user();
 
-        
+
         $namaHari = LabaRugi::where('hari', $hari)->first();
         $labaRugi = LabaRugi::where('hari', $hari)->first();
 
         $jumlah_barang = DetailPenjualan::whereDate('created_at', $hari)->sum('jumlah_barang');
         $pendapatan = $labaRugi->total_pemasukan;
         $detail_barang = DetailPenjualan::whereDate('created_at', $hari)->get();
-        
+
         foreach ($detail_barang as $barang) {
             $barangDB = Barang::where('id', $barang->barang_id)->first();
             $keuntunganarr[] = $barang->jumlah_barang * ($barangDB->harga_jual - $barangDB->harga_beli);
             $keuntungan = array_sum($keuntunganarr);
+            $data = [];
             if ($keuntunganarr) {
                 $keuntungan = array_sum($keuntunganarr);
-            } else {
-                $keuntungan  = 0;
+                $data = [
+                    'jumlah_penjualan'  => $jumlah_barang,
+                    'pendapatan'        => number_format($pendapatan, 0, ',', '.'),
+                    'keuntungan'        => number_format($keuntungan, 0, ',', '.'),
+                ];
+                return view('pimpinan.laporan.hari.detail', compact('user', 'data', 'namaHari'));
             }
         }
-        $data = [];
+        $keuntungan  = 0;
         $data = [
             'jumlah_penjualan'  => $jumlah_barang,
             'pendapatan'        => number_format($pendapatan, 0, ',', '.'),

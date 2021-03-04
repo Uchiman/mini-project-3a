@@ -5,7 +5,7 @@
             message: '{{ session('success') }}'
         },{
             // settings
-            type: 'success',
+            type: 'info',
             offset: 20,
             z_index: 10000,
             delay: 1500
@@ -19,7 +19,7 @@
             message: '{{ session('info') }}'
         },{
             // settings
-            type: 'info',
+            type: 'warning',
             offset: 20,
             z_index: 10000,
             delay: 1500

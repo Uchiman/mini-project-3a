@@ -9,7 +9,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3> 5 </h3>
+                        <h3> {{ $data['pembelian'] ?? 0 }} </h3>
 
                         <p>Transaksi Pembelian</p>
                     </div>
@@ -25,7 +25,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3> 5 </h3>
+                        <h3> {{ $data['barang'] ?? 0 }} </h3>
 
                         <p>Data Barang</p>
                     </div>
@@ -40,7 +40,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3> 5 </h3>
+                        <h3> {{ $data['supplier'] ?? 0 }} </h3>
 
                         <p>Supplier</p>
                     </div>
@@ -56,7 +56,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3> 5 </h3>
+                        <h3> {{ $data['kategori'] ?? 0 }} </h3>
 
                         <p>Kategori</p>
                     </div>

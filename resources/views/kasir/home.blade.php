@@ -2,7 +2,7 @@
 
 @section('content')
 
-@extends('templates.default')
+    @extends('templates.default')
 
 @section('content')
 
@@ -13,7 +13,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3> 5 </h3>
+                        <h3> {{ $data['penjualan'] ?? 0 }} </h3>
 
                         <p>Transaksi Penjualan</p>
                     </div>
@@ -29,12 +29,12 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3> 5 </h3>
+                        <h3> {{ $data['member'] }} </h3>
 
                         <p>Data Member</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-users"></i>
+                        <i class="ion ion-card"></i>
                     </div>
                     <a href="/kasir/member" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
@@ -42,20 +42,50 @@
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-info">
+                <div class="small-box bg-secondary">
                     <div class="inner">
-                        <h3> 5 </h3>
+                        <h3>Rp. {{ $data['pendapatan'] ?? 0}} </h3>
 
-                        <p>Kategori</p>
+                        <p>Uang Masuk Hari Ini</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bookmark"></i>
+                        <i class="ion ion-cash"></i>
                     </div>
-                    <a href="/staff/kategori" class="small-box-footer">More info <i
-                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
+            @if ($absen == null)
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3> {{ $data['hari']->format('d-M-Y') }} </h3>
+
+                        <p>Belum Absen</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-alert"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            @endif
+            @if ($absen)
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3> {{ $data['hari']->format('d-M-Y') }} </h3>
+
+                        <p>Sudah Absen</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-checkmark"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            @endif
 
         </div>
         <!-- /.row -->
@@ -151,6 +181,21 @@
                                     <label for="todoCheck5"></label>
                                 </div>
                                 <span class="text">Laporan data pengeluaran kepada staff</span>
+                                <div class="tools">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-o"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="handle">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </span>
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="checkbox" value="" name="todo5" id="todoCheck5">
+                                    <label for="todoCheck5"></label>
+                                </div>
+                                <span class="text">Absen Harian</span>
                                 <div class="tools">
                                     <i class="fas fa-edit"></i>
                                     <i class="fas fa-trash-o"></i>

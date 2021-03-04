@@ -189,7 +189,7 @@ class PenjualanController extends Controller
                 $stokBarang = new LaporanStok();
                 $stokBarang->barang_id      = $barang->barang_id;
                 $stokBarang->terjual        = $barang->jumlah_barang - $barang->jumlah_barang;
-                $stokBarang->sisa           = $barang->stok + $barang->jumlah_barang;
+                $stokBarang->sisa           = $barangDB->stok + $barang->jumlah_barang;
                 $stokBarang->hari           = $hari;
                 $stokBarang->bulan          = $bulan;
                 $stokBarang->save();
