@@ -33,7 +33,7 @@
                     </li>
                     @endrole
                 </ul>
-            </li>  
+            </li>
             <li class="nav-item">
                 <a href="/staff/pembelian" class="nav-link">
                     <i class="nav-icon fas fa-shopping-cart"></i>
@@ -201,31 +201,64 @@
                             @endrole
                             @role('admin')
 
-                            Anda bukan siapa-siapa
+                            <!-- Sidebar Menu -->
+                            <nav class="mt-2">
+                                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                                    data-accordion="false">
+                                    <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+                                    <li class="nav-item menu-open">
+                                        <a href="#" class="nav-link active">
+                                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                                            <p>
+                                                Dashboard
+                                                <i class="right fas fa-angle-left"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            @role('admin')
+                                            <li class="nav-item">
+                                                <a href="/admin" class="nav-link active">
+                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <p>Dashboard Admin</p>
+                                                </a>
+                                            </li>
+                                            @endrole
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/users" class="nav-link">
+                                            <i class="nav-icon fas fa-users"></i>
+                                            <p>
+                                                User
+                                                <span class="badge badge-info right"></span>
+                                            </p>
+                                        </a>
+                                    </li>
 
-                            @endrole
+                                    @endrole
 
-                            <li class="nav-header">AKUN SAYA</li>
-                            <li class="nav-item">
-                                <a href="iframe.html" class="nav-link">
-                                    <i class="nav-icon fas fa-user-alt"></i>
-                                    <p>Info akun</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href={{ route('logout') }}" onclick="event.preventDefault();
+                                    <li class="nav-header">AKUN SAYA</li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('akun.index') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-user-alt"></i>
+                                            <p>Info akun</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href={{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();" class="nav-link">
-                                    <i class="nav-icon fas fa-sign-out-alt"></i>
-                                    <p>Keluar</p>
-                                </a>
-                            </li>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                            </form>
-                        </ul>
-                    </nav>
-                    <!-- /.sidebar-menu -->
+                                            <i class="nav-icon fas fa-sign-out-alt"></i>
+                                            <p>Keluar</p>
+                                        </a>
+                                    </li>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                    </form>
+                                </ul>
+                            </nav>
+                            <!-- /.sidebar-menu -->
 
 
 </div>

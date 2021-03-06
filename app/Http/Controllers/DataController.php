@@ -10,6 +10,7 @@ use App\Pembelian;
 use App\Pengeluaran;
 use App\Penjualan;
 use App\Supplier;
+use App\User;
 use Illuminate\Http\Request;
 
 class DataController extends Controller
@@ -136,6 +137,18 @@ class DataController extends Controller
 
         return datatables()->of($hari)
             ->addColumn('action', 'pimpinan.laporan.hari.action')
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->toJson();
+    }
+
+    // data semua user
+    public function users()
+    {
+        $user = User::role(['staff', 'pimpinan', 'kasir'])->get();
+
+        return datatables()->of($user)
+            ->addColumn('action', 'admin.users.action')
             ->addIndexColumn()
             ->rawColumns(['action'])
             ->toJson();

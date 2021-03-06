@@ -5,6 +5,56 @@ Breadcrumbs::for('home', function ($trail) {
     $trail->push('Welcome', route('home'));
 });
 
+// Akun Index
+Breadcrumbs::for('akun.index', function ($trail) {
+    $trail->push('Home', route('home'));
+    $trail->push('Info Akun', route('akun.index'));
+});
+
+// Akun Edit
+Breadcrumbs::for('akun.edit', function ($trail, $data) {
+    $trail->push('Home', route('home'));
+    $trail->push('Info Akun', route('akun.index'));
+    $trail->push('Edit Akun', route('akun.edit', $data));
+});
+
+// Akun Vertifikasi
+Breadcrumbs::for('akun.vertifikasi', function ($trail) {
+    $trail->push('Home', route('home'));
+    $trail->push('Info Akun', route('akun.index'));
+    $trail->push('Vertifikasi Akun', route('akun.vertifikasi'));
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN
+|--------------------------------------------------------------------------
+*/
+
+
+// Index Users
+Breadcrumbs::for('users.index', function ($trail) {
+    $trail->push('Home', route('admin'));
+    $trail->push('Users', route('users.index'));
+});
+
+
+// Create Users
+Breadcrumbs::for('users.create', function ($trail) {
+    $trail->push('Home', route('admin'));
+    $trail->push('Users', route('users.index'));
+    $trail->push('Tambah Users', route('users.create'));
+});
+
+// Edit Users
+Breadcrumbs::for('users.edit', function ($trail, $users) {
+    $trail->push('Home', route('admin'));
+    $trail->push('Users', route('users.index'));
+    $trail->push('Edit Users', route('users.edit', $users));
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | STAFF
@@ -191,6 +241,48 @@ Breadcrumbs::for('pimpinan.detailBulan', function ($trail, $data) {
     $trail->push('Laporan Bulanan', route('pimpinan.detailBulan', $data));
 });
 
+
+// Laporan Pembelian Bulanan 
+Breadcrumbs::for('pimpinan.pembelianBulan', function ($trail, $data) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Data Bulan', route('pimpinan.dataBulan'));
+    $trail->push('Laporan Bulanan', route('pimpinan.detailBulan', $data));
+    $trail->push('Pembelian', route('pimpinan.pembelianBulan', $data));
+});
+
+// Laporan Penjualan Bulanan 
+Breadcrumbs::for('pimpinan.penjualanBulan', function ($trail, $data) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Data Bulan', route('pimpinan.dataBulan'));
+    $trail->push('Laporan Bulanan', route('pimpinan.detailBulan', $data));
+    $trail->push('Pembelian', route('pimpinan.penjualanBulan', $data));
+});
+
+// Laporan Detail Penjualan Bulanan 
+Breadcrumbs::for('pimpinan.detailPenjualan', function ($trail, $data) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Data Bulan', route('pimpinan.dataBulan'));
+    $trail->push('Laporan Bulanan', route('pimpinan.detailBulan', $data));
+    $trail->push('Pembelian', route('pimpinan.penjualanBulan', $data));
+    $trail->push('Detail', route('pimpinan.detailPenjualan', $data));
+});
+
+// Laporan Pengeluaran Bulanan 
+Breadcrumbs::for('pimpinan.pengeluaranBulan', function ($trail, $data) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Data Bulan', route('pimpinan.dataBulan'));
+    $trail->push('Laporan Bulanan', route('pimpinan.detailBulan', $data));
+    $trail->push('Pembelian', route('pimpinan.pengeluaranBulan', $data));
+});
+
+// Laporan Absensi Bulanan 
+Breadcrumbs::for('pimpinan.absensiBulan', function ($trail, $data) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Data Bulan', route('pimpinan.dataBulan'));
+    $trail->push('Laporan Bulanan', route('pimpinan.detailBulan', $data));
+    $trail->push('Pembelian', route('pimpinan.absensiBulan', $data));
+});
+
 // Index Laporan Harian
 Breadcrumbs::for('pimpinan.dataHari', function ($trail) {
     $trail->push('Home', route('pimpinan'));
@@ -210,7 +302,7 @@ Breadcrumbs::for('pimpinan.stokHari', function ($trail) {
     $trail->push('Laporan Harian', route('pimpinan.stokHari'));
 });
 
-// Laporan Stok Harian
+// Laporan Stok Bulanan
 Breadcrumbs::for('pimpinan.stokBulan', function ($trail) {
     $trail->push('Home', route('pimpinan'));
     $trail->push('Laporan Harian', route('pimpinan.stokBulan'));

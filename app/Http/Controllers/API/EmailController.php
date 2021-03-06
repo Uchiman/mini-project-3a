@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class EmailController extends Controller
 {
+    // kirim kode vertifikasi
     public function sendEmail()
     {
         $user = Auth::user();
@@ -30,6 +31,7 @@ class EmailController extends Controller
         ], 200);
     }
 
+    // vertifikasi email
     public function verifyEmail(Request $request)
     {
         $user = Auth::user();

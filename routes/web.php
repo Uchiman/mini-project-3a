@@ -24,6 +24,7 @@ Route::get('pimpinan/stok-bulan/data', 'DataController@stokBulan')->name('stokBu
 Route::get('pimpinan/stok-hari/data', 'DataController@stokHari')->name('stokHari.data');
 Route::get('pimpinan/laporan-bulan/data', 'DataController@dataBulan')->name('dataBulan.data');
 Route::get('pimpinan/laporan-hari/data', 'DataController@dataHari')->name('dataHari.data');
+Route::get('admin/users/data', 'DataController@users')->name('users.data');
 
 Route::get('/', function () {
     return view('auth.login');
@@ -32,7 +33,22 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['role:staff|kasir|pimpinan|admin']], function () {
+    // home
+    Route::get('/home', 'HomeController@index')->name('home');
+    // vertifikasi akun
+    Route::get('/akun/vertifikasi', 'UserController@viewEmail')->name('akun.vertifikasi');
+    Route::post('/akun/vertifikasi', 'UserController@sendMail')->name('akun.kirim-vertifikasi');
+    Route::post('/akun/vertifikasi-email', 'UserController@verifyEmail')->name('akun.vertifikasi-email');
+    Route::resource('/akun', 'UserController');
+});
+
+Route::group(['middleware' => ['role:admin']], function () {
+    // home
+    Route::get('/admin', 'HomeController@admin')->name('admin');
+    // crud data
+    Route::resource('admin/users', 'UsersController');
+});
 
 Route::group(['middleware' => ['role:staff']], function () {
     // home
