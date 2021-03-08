@@ -95,6 +95,9 @@ class HomeController extends Controller
     public function pimpinan()
     {
         $user = Auth::user();
-        return view('pimpinan.home', compact('user'));
+        $barang = Barang::all()->count();
+        $bulan = Carbon::now()->isoFormat('MMMM');
+        $hari = Carbon::now()->isoFormat('dddd');
+        return view('pimpinan.home', compact('user', 'barang', 'bulan', 'hari'));
     }
 }

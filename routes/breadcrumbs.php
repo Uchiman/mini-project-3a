@@ -242,6 +242,12 @@ Breadcrumbs::for('pimpinan.detailBulan', function ($trail, $data) {
 });
 
 
+// Detail Laporan Bulanan 2
+Breadcrumbs::for('pimpinan.detailBulan2', function ($trail) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Laporan Bulanan', route('pimpinan.detailBulan2'));
+});
+
 // Laporan Pembelian Bulanan 
 Breadcrumbs::for('pimpinan.pembelianBulan', function ($trail, $data) {
     $trail->push('Home', route('pimpinan'));
@@ -296,6 +302,29 @@ Breadcrumbs::for('pimpinan.detailHari', function ($trail, $data) {
     $trail->push('Laporan Harian', route('pimpinan.detailHari', $data));
 });
 
+// Detail Laporan Harian 2
+Breadcrumbs::for('pimpinan.detailHari2', function ($trail) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Laporan Harian', route('pimpinan.detailHari2'));
+});
+
+// Laporan Penjualan Harian 
+Breadcrumbs::for('pimpinan.penjualanHari', function ($trail, $data) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Data Hari', route('pimpinan.dataHari'));
+    $trail->push('Laporan Harian', route('pimpinan.detailHari', $data));
+    $trail->push('Pembelian', route('pimpinan.penjualanHari', $data));
+});
+
+// Laporan Detail Penjualan Harian 
+Breadcrumbs::for('pimpinan.detailPenjualan2', function ($trail, $data) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Data Hari', route('pimpinan.dataHari'));
+    $trail->push('Laporan Harian', route('pimpinan.detailHari', $data));
+    $trail->push('Pembelian', route('pimpinan.penjualanHari', $data));
+    $trail->push('Detail', route('pimpinan.detailPenjualan2', $data));
+});
+
 // Laporan Stok Harian
 Breadcrumbs::for('pimpinan.stokHari', function ($trail) {
     $trail->push('Home', route('pimpinan'));
@@ -306,4 +335,10 @@ Breadcrumbs::for('pimpinan.stokHari', function ($trail) {
 Breadcrumbs::for('pimpinan.stokBulan', function ($trail) {
     $trail->push('Home', route('pimpinan'));
     $trail->push('Laporan Harian', route('pimpinan.stokBulan'));
+});
+
+// Absensi Kasir
+Breadcrumbs::for('pimpinan.absen', function ($trail) {
+    $trail->push('Home', route('pimpinan'));
+    $trail->push('Absensi Kasir', route('pimpinan.absen'));
 });

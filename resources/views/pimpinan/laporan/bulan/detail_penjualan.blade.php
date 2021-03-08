@@ -30,7 +30,13 @@
                                         <td>{{ $detail_penjualan->barang->nama ?? 0 }}</td>
                                         <td>{{ number_format($detail_penjualan->barang->harga_jual, 0, ',', '.') }}</td>
                                         <td>x {{ $detail_penjualan->jumlah_barang ?? 0 }}</td>
-                                        <td>{{ number_format(($detail_penjualan->barang->harga_jual ?? 0) * ($detail_penjualan->jumlah_barang ?? 0), 0, ',', '.') }}
+                                        @if ($penjualan->kode_member != null)
+                                            <td>{{ $detail_penjualan->barang->diskon }}%</td>
+                                            <td>{{ number_format($detail_penjualan->harga_jual ?? 0, 0, ',', '.') }}
+                                        @endif
+                                        @if (!$penjualan->kode_member)
+                                            <td>{{ number_format($detail_penjualan->harga_jual ?? 0, 0, ',', '.') }}
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -56,7 +62,7 @@
                         <table class="table">
                             <div class="text-center">
                                 <h5>Kasir : {{ $kasir->name }}</h5>
-                                <h5>No : {{ ($penjualan->created_at->format('dmyhi')) . ($penjualan->id) }}</h5>
+                                <h5>No : {{ $penjualan->created_at->format('dmyhi') . $penjualan->id }}</h5>
                             </div>
                         </table>
                     </div>

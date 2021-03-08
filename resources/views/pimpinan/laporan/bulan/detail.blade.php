@@ -31,7 +31,7 @@
                         <p>Penjualan</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="ion ion-card"></i>
                     </div>
                     <a href="/pimpinan/laporan/bulan/penjualan/{{ $namaBulan->bulan }}" class="small-box-footer">More info
                         <i class="fas fa-arrow-circle-right"></i></a>
@@ -47,7 +47,7 @@
                         <p>Pengeluaran</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="ion ion-cash"></i>
                     </div>
                     <a href="/pimpinan/laporan/bulan/pengeluaran/{{ $namaBulan->bulan }}" class="small-box-footer">More
                         info <i class="fas fa-arrow-circle-right"></i></a>
@@ -63,7 +63,7 @@
                         <p>Absensi Kasir</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="ion ion-calendar"></i>
                     </div>
                     <a href="/pimpinan/laporan/bulan/absensi/{{ $namaBulan->bulan }}" class="small-box-footer">More info
                         <i class="fas fa-arrow-circle-right"></i></a>
@@ -79,9 +79,8 @@
                         <p>Jumlah Karyawan</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="ion ion-person"></i>
                     </div>
-                    {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
                 </div>
             </div>
             <!-- ./col -->
@@ -94,9 +93,8 @@
                         <p>Uang Masuk</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="ion ion-log-in"></i>
                     </div>
-                    {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
                 </div>
             </div>
             <!-- ./col -->
@@ -109,9 +107,8 @@
                         <p>Uang Keluar</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
+                        <i class="ion ion-log-out"></i>
                     </div>
-                    {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
                 </div>
             </div>
             <!-- ./col -->
@@ -125,9 +122,8 @@
                             <p>Rugi</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
+                            <i class="ion ion-chevron-down"></i>
                         </div>
-                        {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
                     </div>
                 </div>
                 <!-- ./col -->
@@ -140,12 +136,11 @@
                         <div class="inner">
                             <h3>Rp. {{ number_format($data['labaRugi'], 0, ',', '.') ?? 0 }}</h3>
 
-                            <p>Laba</p>
+                            <p>Untung</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
+                            <i class="ion ion-chevron-up"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->

@@ -197,6 +197,15 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="/pimpinan/absen" class="nav-link">
+                                    <i class="nav-icon fas fa-user-check"></i>
+                                    <p>
+                                        Absensi Kasir
+                                        <span class="badge badge-info right"></span>
+                                    </p>
+                                </a>
+                            </li>
 
                             @endrole
                             @role('admin')

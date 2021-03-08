@@ -55,20 +55,20 @@
                     @endrole
                     <!-- /.row -->
                     <a href="/akun/{{ $user->id }}/edit" class="btn btn-warning">Edit Profil</a>
-                </div>
-                <div class="float-right">
-                    @if ($user->email_verified_at)
-                    <p class="small">*Sudah vertifikasi email</p>
-                    @endif
-                    @if (!$user->email_verified_at)
-                    <p class="small">*Belum vertifikasi email</p>
-                    <form action="{{ route('akun.kirim-vertifikasi') }}" method="post">
-                        @csrf
-                        <button type="submit">
-                            <p class="small">Kirim Vertifikasi</p>
-                        </button>
-                    </form>
-                    @endif
+                    <div class="float-right">
+                        @if ($user->email_verified_at)
+                            <p class="small">*Sudah vertifikasi email</p>
+                        @endif
+                        @if (!$user->email_verified_at)
+                            <p class="small">*Belum vertifikasi email</p>
+                            <form action="{{ route('akun.kirim-vertifikasi') }}" method="post">
+                                @csrf
+                                <button type="submit">
+                                    <p class="small">Kirim Vertifikasi</p>
+                                </button>
+                            </form>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

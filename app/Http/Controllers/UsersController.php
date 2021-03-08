@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Absen;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -53,6 +55,14 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->assignRole($request->role);
+        if ($request->role == 'kasir') {
+            $absen = new Absen();
+            $absen->user_id = $user->id;
+            $absen->absen = 0;
+            $absen->kode_id = 1;
+            $absen->created_at = Carbon::yesterday();
+            $absen->save();
+        }
 
         $user->save();
 

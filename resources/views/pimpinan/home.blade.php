@@ -3,21 +3,21 @@
 @section('content')
 
     <div class="container-fluid">
-        <h1>Laporan Hari</h1>
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <div class="col-lg-3 col-6">
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>5 </h3>
+                        <h3>{{ $barang }}</h3>
 
-                        <p>Pendapatan</p>
+                        <p>Stok Barang Bulan Ini</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="ion ion-cube"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/pimpinan/stok/bulan" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -25,14 +25,14 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>5}</h3>
+                        <h3>{{ $bulan }}</h3>
 
-                        <p>Keuntungan</p>
+                        <p>Laporan Bulanan</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info
+                    <a href="/pimpinan/laporan/bulan-ini" class="small-box-footer">More info
                         <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
@@ -41,14 +41,14 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>5</h3>
+                        <h3>{{ $hari }}</h3>
 
-                        <p>Barang Terjual</p>
+                        <p>Laporan Harian</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info
+                    <a href="/pimpinan/laporan/hari-ini" class="small-box-footer">More info
                         <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                                     <label for="todoCheck1"></label>
                                 </div>
                                 <!-- todo text -->
-                                <span class="text">Input data transaksi pembelian</span>
+                                <span class="text">Mengecek data stok barang</span>
                                 <!-- Emphasis label -->
                                 <!-- General tools such as edit or delete-->
                                 <div class="tools">
@@ -111,7 +111,7 @@
                                     <input type="checkbox" value="" name="todo2" id="todoCheck2">
                                     <label for="todoCheck2"></label>
                                 </div>
-                                <span class="text">Mengecek data barang yang masuk</span>
+                                <span class="text">Mengecek data transaksi pembelian</span>
                                 <div class="tools">
                                     <i class="fas fa-edit"></i>
                                     <i class="fas fa-trash-o"></i>
@@ -126,7 +126,7 @@
                                     <input type="checkbox" value="" name="todo3" id="todoCheck3">
                                     <label for="todoCheck3"></label>
                                 </div>
-                                <span class="text">Mengecek data supplier</span>
+                                <span class="text">Mengecek data transaksi penjualan kasir</span>
                                 <div class="tools">
                                     <i class="fas fa-edit"></i>
                                     <i class="fas fa-trash-o"></i>
@@ -141,7 +141,7 @@
                                     <input type="checkbox" value="" name="todo4" id="todoCheck4">
                                     <label for="todoCheck4"></label>
                                 </div>
-                                <span class="text">Mengecek data kategori barang</span>
+                                <span class="text">Mengecek data pengeluaran</span>
                                 <div class="tools">
                                     <i class="fas fa-edit"></i>
                                     <i class="fas fa-trash-o"></i>
@@ -156,7 +156,7 @@
                                     <input type="checkbox" value="" name="todo5" id="todoCheck5">
                                     <label for="todoCheck5"></label>
                                 </div>
-                                <span class="text">Input data pengeluaran ( jika ada )</span>
+                                <span class="text">Mengecek data absensi kasir</span>
                                 <div class="tools">
                                     <i class="fas fa-edit"></i>
                                     <i class="fas fa-trash-o"></i>
@@ -171,7 +171,7 @@
                                     <input type="checkbox" value="" name="todo5" id="todoCheck5">
                                     <label for="todoCheck5"></label>
                                 </div>
-                                <span class="text">Laporan kepada pimpinan</span>
+                                <span class="text">Membuat laporan</span>
                                 <div class="tools">
                                     <i class="fas fa-edit"></i>
                                     <i class="fas fa-trash-o"></i>

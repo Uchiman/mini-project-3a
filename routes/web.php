@@ -84,6 +84,7 @@ Route::group(['middleware' => ['role:pimpinan']], function () {
     // laporan bulan
     Route::get('/pimpinan/laporan/bulan', 'LaporanController@dataBulan')->name('pimpinan.dataBulan');
     Route::get('/pimpinan/laporan/bulan/{bulan}', 'LaporanController@detailBulan')->name('pimpinan.detailBulan');
+    Route::get('/pimpinan/laporan/bulan-ini', 'LaporanController@detailBulan2')->name('pimpinan.detailBulan2');
     Route::get('/pimpinan/laporan/bulan/pembelian/{bulan}', 'LaporanController@pembelianBulan')->name('pimpinan.pembelianBulan');
     Route::get('/pimpinan/laporan/bulan/penjualan/{bulan}', 'LaporanController@penjualanBulan')->name('pimpinan.penjualanBulan');
     Route::get('/pimpinan/laporan/bulan/penjualan/detail/{id}', 'LaporanController@detailPenjualan')->name('pimpinan.detailPenjualan');
@@ -92,4 +93,11 @@ Route::group(['middleware' => ['role:pimpinan']], function () {
     // laporan hari
     Route::get('/pimpinan/laporan/hari', 'LaporanController@dataHari')->name('pimpinan.dataHari');
     Route::get('/pimpinan/laporan/hari/{hari}', 'LaporanController@detailHari')->name('pimpinan.detailHari');
+    Route::get('/pimpinan/laporan/hari-ini', 'LaporanController@detailHari2')->name('pimpinan.detailHari2');
+    Route::get('/pimpinan/laporan/hari/penjualan/{hari}', 'LaporanController@penjualanHari')->name('pimpinan.penjualanHari');
+    Route::get('/pimpinan/laporan/hari/penjualan/detail/{id}', 'LaporanController@detailPenjualan')->name('pimpinan.detailPenjualan2');
+    // absensi kasir
+    Route::get('/pimpinan/absen', 'LaporanController@absen')->name('pimpinan.absen');
+    Route::post('/pimpinan/absen', 'LaporanController@kodeAbsen')->name('pimpinan.kode-absen');
+
 });

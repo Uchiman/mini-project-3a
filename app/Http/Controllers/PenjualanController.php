@@ -225,10 +225,8 @@ class PenjualanController extends Controller
         $penjualan->total_bayar = $total_bayar;
         $penjualan->kembalian = $request->dibayar - $total_bayar;
         if ($penjualan->kembalian < 0) {
-            return Response()->json([
-                "status" => "failed",
-                "message" => "uang tidak cukup",
-            ], 400);
+            return redirect()->route('penjualan.index')
+            ->with('danger', 'Uang tidak cukup!');
         }
         $penjualan->created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
         $hari = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');

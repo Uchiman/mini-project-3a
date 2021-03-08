@@ -10,14 +10,29 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>Rp. {{ $data['pendapatan'] ?? 0 }} x</h3>
+                        <h3>{{ $data['penjualan'] ?? 0 }} x</h3>
+
+                        <p>Penjualan</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-card"></i>
+                    </div>
+                    <a href="/pimpinan/laporan/hari/penjualan/{{ $namaHari->hari }}" class="small-box-footer">More info
+                        <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>Rp. {{ $data['pendapatan'] ?? 0 }}</h3>
 
                         <p>Pendapatan</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -30,10 +45,8 @@
                         <p>Keuntungan</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="ion ion-cash"></i>
                     </div>
-                    <a href="/pimpinan/laporan/bulan/penjualan/{{ $namaHari->bulan }}" class="small-box-footer">More info
-                        <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -41,15 +54,13 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>{{ $data['jumlah_barang'] ?? 0 }}</h3>
+                        <h3>{{ $data['jumlah_penjualan'] ?? 0 }}</h3>
 
                         <p>Barang Terjual</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="/pimpinan/laporan/bulan/pengeluaran/{{ $namaHari->hari }}" class="small-box-footer">More info
-                        <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->

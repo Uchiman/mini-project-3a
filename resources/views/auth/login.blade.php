@@ -82,7 +82,7 @@
                         @endif
                     </p>
                     <p class="mb-0">
-                        <a href="register.html" class="text-center">Register a new membership</a>
+                        <a href="#" class="text-center">Register a new membership</a>
                     </p>
                 </div>
                 <!-- /.card-body -->
