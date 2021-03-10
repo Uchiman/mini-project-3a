@@ -337,6 +337,7 @@ class KasirController extends Controller
         }
 
         $absen = Absen::where('user_id', $user_id)->where('absen', 0)->first();
+
         $absen->kode_id = $request->kode;
         if ($request->kode != $kode->kode) {
             return Response()->json([
