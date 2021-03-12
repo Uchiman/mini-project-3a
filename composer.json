@@ -16,6 +16,7 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-permission": "^4.0",
         "tymon/jwt-auth": "dev-develop",
         "yajra/laravel-datatables-oracle": "~9.0"

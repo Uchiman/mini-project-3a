@@ -7,11 +7,11 @@
             <div class="card-header">
                 <h3 class="card-title">
                     @if (!$kode)
-                    Generate Kode Absen
+                        Generate Kode Absen
                     @endif
                     @if ($kode)
-                    Kode Absen Hari Ini
-                @endif
+                        Kode Absen Hari Ini
+                    @endif
                 </h3>
             </div>
             <!-- /.card-header -->
@@ -23,6 +23,8 @@
                         <h1 class="text-center">Belum membuat kode absen!</h1>
                     @endif
                     @if ($kode)
+                        <h1 class="text-center"> {{ $qr }} </h1>
+                        <hr>
                         <h1 class="text-center">{{ $kode->kode }}</h1>
                     @endif
                 </div>

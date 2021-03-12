@@ -12,8 +12,10 @@ use App\Pengeluaran;
 use App\Penjualan;
 use App\User;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class LaporanController extends Controller
 {
@@ -179,7 +181,9 @@ class LaporanController extends Controller
     {
         $user = Auth::user();
         $kode = KodeAbsen::whereDate('created_at', Carbon::today())->first();
-        return view('pimpinan.absen.absen', compact('user', 'kode'));
+        $qr = QrCode::size(450)->generate($kode->kode);
+        
+        return view('pimpinan.absen.absen', compact('user', 'kode', 'qr'));
     }
 
     // kode absen
@@ -189,7 +193,7 @@ class LaporanController extends Controller
         $kodeAbsen = KodeAbsen::whereDate('created_at', $created_at)->first();
         if ($kodeAbsen) {
             return redirect()->route('pimpinan.absen')
-            ->with('danger', 'Kode hari ini sudah ada!');
+                ->with('danger', 'Kode hari ini sudah ada!');
         }
         $kodeAbsen = KodeAbsen::where('kode', 0)->first();
         if (!$kodeAbsen) {
@@ -266,4 +270,5 @@ class LaporanController extends Controller
 
         return view('pimpinan.laporan.bulan.detail', compact('user', 'data', 'namaBulan'));
     }
+
 }

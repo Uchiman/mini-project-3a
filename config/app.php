@@ -168,6 +168,7 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         
         /*
          * Application Service Providers...
@@ -232,6 +233,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class, 
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
 
 
     ],
