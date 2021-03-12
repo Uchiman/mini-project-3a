@@ -181,9 +181,11 @@ class LaporanController extends Controller
     {
         $user = Auth::user();
         $kode = KodeAbsen::whereDate('created_at', Carbon::today())->first();
-        $qr = QrCode::size(450)->generate($kode->kode);
-        
-        return view('pimpinan.absen.absen', compact('user', 'kode', 'qr'));
+        if ($kode) {
+            $qr = QrCode::size(450)->generate($kode->kode);
+            return view('pimpinan.absen.absen', compact('user', 'kode', 'qr'));
+        }
+        return view('pimpinan.absen.absen', compact('user', 'kode'));
     }
 
     // kode absen
@@ -270,5 +272,4 @@ class LaporanController extends Controller
 
         return view('pimpinan.laporan.bulan.detail', compact('user', 'data', 'namaBulan'));
     }
-
 }
