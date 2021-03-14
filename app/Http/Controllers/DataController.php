@@ -145,7 +145,7 @@ class DataController extends Controller
     // data semua user
     public function users()
     {
-        $user = User::role(['staff', 'pimpinan', 'kasir'])->get();
+        $user = User::role(['staff', 'pimpinan', 'kasir'])->with('roles')->get();
 
         return datatables()->of($user)
             ->addColumn('action', 'admin.users.action')

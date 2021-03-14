@@ -16,6 +16,7 @@
                                     <th>Id</th>
                                     <th>Nama</th>
                                     <th>Email</th>
+                                    <th>Role</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -71,6 +72,9 @@
                     },
                     {
                         data: 'email'
+                    },
+                    {
+                        data: 'roles[0].name'
                     },
                     {
                         data: 'action'

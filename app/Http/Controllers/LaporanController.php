@@ -180,7 +180,8 @@ class LaporanController extends Controller
     public function absen()
     {
         $user = Auth::user();
-        $kode = KodeAbsen::whereDate('created_at', Carbon::today())->first();
+        $created_at = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
+        $kode = KodeAbsen::whereDate('created_at', $created_at)->first();
         if ($kode) {
             $qr = QrCode::size(450)->generate($kode->kode);
             return view('pimpinan.absen.absen', compact('user', 'kode', 'qr'));
