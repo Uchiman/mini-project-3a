@@ -249,6 +249,7 @@ class StaffController extends Controller
         $pembelian->total_bayar         = $request->total_bayar;
         $pembelian->hari                = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m-d');
         $pembelian->bulan               = Carbon::now(new \DateTimeZone('Asia/Jakarta'))->format('Y-m');
+        $pembelian->created_at          = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
 
         $pembelian->save();
 
@@ -312,6 +313,7 @@ class StaffController extends Controller
         $pembelian = Pembelian::where('id', $id)->first();
         $pembelian->supplier            = $request->supplier;
         $pembelian->barang              = $request->barang;
+        $pembelian->created_at          = Carbon::now(new \DateTimeZone('Asia/Jakarta'));
         $pembelian->total_barang        = $request->total_barang;
         $pembelian->total_bayar         = $request->total_bayar;
 
