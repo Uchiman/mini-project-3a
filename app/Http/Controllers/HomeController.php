@@ -100,4 +100,13 @@ class HomeController extends Controller
         $hari = Carbon::now()->isoFormat('dddd');
         return view('pimpinan.home', compact('user', 'barang', 'bulan', 'hari'));
     }
+
+    // home admin
+    public function admin()
+    {
+        $user = Auth::user();
+        $users = User::role(['staff', 'pimpinan', 'kasir'])->count();
+
+        return view('admin.home', compact('user', 'users'));
+    }
 }

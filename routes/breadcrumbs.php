@@ -32,6 +32,11 @@ Breadcrumbs::for('akun.vertifikasi', function ($trail) {
 |--------------------------------------------------------------------------
 */
 
+// Home
+Breadcrumbs::for('admin', function ($trail) {
+    $trail->push('Home', route('admin'));
+});
+
 
 // Index Users
 Breadcrumbs::for('users.index', function ($trail) {
