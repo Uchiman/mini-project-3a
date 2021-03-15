@@ -13,6 +13,10 @@ class SupplierSeeder extends Seeder
     public function run()
     {
         Supplier::create([
+            'nama'    =>  'Default',
+        ]);
+
+        Supplier::create([
             'nama'    =>  'Toko Agung',
             'alamat'    =>  'Bantul',
         ]);

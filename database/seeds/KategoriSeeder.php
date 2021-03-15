@@ -13,9 +13,12 @@ class KategoriSeeder extends Seeder
     public function run()
     {
         Kategori::create([
-            'nama'    =>  'Makanan',
+            'nama'    =>  'Default',
         ]);
 
+        Kategori::create([
+            'nama'    =>  'Makanan',
+        ]);
 
         Kategori::create([
             'nama'    =>  'Minuman',
