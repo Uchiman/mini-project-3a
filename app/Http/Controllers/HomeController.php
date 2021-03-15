@@ -44,8 +44,8 @@ class HomeController extends Controller
         $user = Auth::user();
         $pembelian = Pembelian::all()->count();
         $barang = Barang::all()->count();
-        $supplier = Supplier::all()->count();
-        $kategori = Kategori::all()->count();
+        $supplier = Supplier::where('nama', '!=', 'Default')->count();
+        $kategori = Kategori::where('nama', '!=', 'Default')->count();
         $data = [];
         $data = [
             'pembelian' => $pembelian,

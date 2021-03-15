@@ -42,7 +42,7 @@ class DataController extends Controller
     // supplier
     public function supplier()
     {
-        $supplier = Supplier::all();
+        $supplier = Supplier::where('nama', '!=', 'Default')->get();
 
         return datatables()->of($supplier)
             ->addColumn('action', 'staff.supplier.action')
@@ -54,7 +54,7 @@ class DataController extends Controller
     // kategori
     public function kategori()
     {
-        $kategori = Kategori::all();
+        $kategori = Kategori::where('nama', '!=', 'Default')->get();
 
         return datatables()->of($kategori)
             ->addColumn('action', 'staff.kategori.action')
