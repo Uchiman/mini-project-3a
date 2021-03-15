@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Kategori\KategoriCollection;
 use App\Http\Resources\User\UserResource;
 use App\Kategori;
+use App\Supplier;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,7 +35,8 @@ class UserController extends Controller
         $role = $user->getRoleNames();
 
         $kategori = Kategori::all();
-        return response()->json(compact('token', 'role', 'name', 'kategori'));
+        $supplier = Supplier::all();
+        return response()->json(compact('token', 'role', 'name', 'kategori', 'supplier'));
     }
 
     public function register(Request $request)
