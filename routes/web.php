@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// use Spatie\Analytics\Analytics;
+use Spatie\Analytics\Period;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,4 +102,9 @@ Route::group(['middleware' => ['role:pimpinan']], function () {
     Route::get('/pimpinan/absen', 'LaporanController@absen')->name('pimpinan.absen');
     Route::post('/pimpinan/absen', 'LaporanController@kodeAbsen')->name('pimpinan.kode-absen');
 
+});
+
+Route::get('/test', function () {
+    $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::months(6));
+    dd($analyticsData);
 });

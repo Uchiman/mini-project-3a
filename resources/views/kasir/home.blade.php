@@ -44,7 +44,7 @@
                 <!-- small box -->
                 <div class="small-box bg-secondary">
                     <div class="inner">
-                        <h3>Rp. {{ $data['pendapatan'] ?? 0}} </h3>
+                        <h3>Rp. {{ $data['pendapatan'] ?? 0 }} </h3>
 
                         <p>Uang Masuk Hari Ini</p>
                     </div>
@@ -55,36 +55,36 @@
             </div>
             <!-- ./col -->
             @if ($absen == null)
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3> {{ $data['hari']->format('d-M-Y') }} </h3>
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3> {{ $data['hari']->format('d-M-Y') }} </h3>
 
-                        <p>Belum Absen</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-alert"></i>
+                            <p>Belum Absen</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-alert"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- ./col -->
+                <!-- ./col -->
             @endif
             @if ($absen)
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3> {{ $data['hari']->format('d-M-Y') }} </h3>
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3> {{ $data['hari']->format('d-M-Y') }} </h3>
 
-                        <p>Sudah Absen</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-checkmark"></i>
+                            <p>Sudah Absen</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-checkmark"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- ./col -->
+                <!-- ./col -->
             @endif
 
         </div>
